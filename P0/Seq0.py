@@ -39,3 +39,15 @@ def seq_count(seq):
         else:
             d["T"] += 1
     return d
+
+
+def seq_reverse(seq):
+    return seq[::-1]
+
+
+def seq_complement(seq):
+    d = {"A": "T", "C": "G", "T": "A", "G": "C"}
+    comp_seq = ""
+    for element in seq:
+        comp_seq += d[element]
+    return comp_seq
