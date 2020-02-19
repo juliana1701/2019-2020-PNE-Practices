@@ -7,6 +7,7 @@ class Seq:
                 print("ERROR!!")
                 return
         self.strbases = strbases
+        print("New sequence created!")
 
     def __str__(self):
         return self.strbases
@@ -15,7 +16,14 @@ class Seq:
         return len(self.strbases)
 
 
-# --- Main program ---
+def generate_seqs(pattern, number):
+    list_seqs = []
+    for element in range(1, number + 1):
+        sequence = Seq(pattern * element)
+        list_seqs.append(sequence)
+    return list_seqs
+
+
 def print_seqs(seq_list):
     index = 0
     for sequences in seq_list:
@@ -23,5 +31,12 @@ def print_seqs(seq_list):
         index += 1
 
 
-seq_lists = [Seq("ACT"), Seq("GATA"), Seq("CAGATA")]
-print_seqs(seq_lists)
+seq_list1 = generate_seqs("A", 3)
+seq_list2 = generate_seqs("AC", 5)
+
+print("List 1:")
+print_seqs(seq_list1)
+
+print()
+print("List 2:")
+print_seqs(seq_list2)
