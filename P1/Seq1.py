@@ -1,6 +1,12 @@
 class Seq:
-    """A class for representing sequence objects"""
-    def __init__(self, strbases):
+    NULL = "NULL"
+    ERROR = "ERROR"
+
+    def __init__(self, strbases=NULL):
+        if strbases == self.NULL:
+            self.strbases = self.NULL
+            print("NULL sequence created")
+            return
         for b in strbases:
             if b not in ["A", "C", "G", "T"]:
                 self.strbases = "ERROR"
@@ -9,18 +15,73 @@ class Seq:
         self.strbases = strbases
         print("New sequence created")
 
-    def __init__(self, strbases="NULL"):
-        if strbases == ():
-            self.strbases = "NULL"
-            print("NULL Seq Created")
-            return
-
     def __str__(self):
         return self.strbases
 
     def len(self):
-        return len(self.strbases)
+        if self.strbases == self.NULL:
+            return 0
+        elif self.strbases == self.ERROR:
+            return 0
+        else:
+            return len(self.strbases)
 
+    def count_base(self, base):
+        counter = 0
+        if self.strbases == self.NULL:
+            return counter
+        elif self.strbases == self.ERROR:
+            return counter
+        else:
+            for element in self.strbases:
+                if element == base:
+                    counter += 1
+            return counter
+
+    def count(self):
+        d = {"A": 0, "C": 0, "T": 0, "G": 0}
+        if self.strbases == self.NULL:
+            d = {"A": 0, "C": 0, "T": 0, "G": 0}
+        elif self.strbases == self.ERROR:
+            d = {"A": 0, "C": 0, "T": 0, "G": 0}
+        else:
+            for base in self.strbases:
+                if base == "A":
+                    d["A"] += 1
+                elif base == "C":
+                    d["C"] += 1
+                elif base == "G":
+                    d["G"] += 1
+                else:
+                    d["T"] += 1
+        return d
+
+    def reverse(self):
+        if self.strbases == self.NULL:
+            return self.strbases
+        elif self.strbases == self.ERROR:
+            return self.strbases
+        else:
+            return self.strbases[::-1]
+
+    def complement(self):
+        if self.strbases == self.NULL:
+            return self.strbases
+        elif self.strbases == self.ERROR:
+            return self.strbases
+        else:
+            d = {"A": "T", "C": "G", "T": "A", "G": "C"}
+            value = ""
+            for element in self.strbases:
+                value = value + d[element]
+            return value
+
+    def read_fasta(self, filename):
+        from pathlib import Path
+        file_contents = Path(filename).read_text()
+        content = file_contents.split("\n")[1:]
+        self.strbases = "".join(content)
+        return self
 
 def generate_seqs(pattern, number):
     list_seqs = []
