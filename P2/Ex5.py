@@ -1,3 +1,4 @@
+from Seq1 import Seq
 from Client0 import Client
 
 PRACTICE = 2
@@ -13,6 +14,8 @@ PORT = 8081
 c = Client(IP, PORT)
 
 # -- Send a message to the server
-print("Sending a message to the server...")
-response = c.talk("Testing!!!")
-print(f"Response: {response}")
+folder = "../Session-04/"
+s = Seq()
+sequence = s.read_fasta(folder + "U5.txt")
+c.debug_talk(f"Sending U5 gene to the server... ")
+c.debug_talk(str(sequence))
