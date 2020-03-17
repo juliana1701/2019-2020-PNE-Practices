@@ -16,6 +16,6 @@ c = Client(IP, PORT)
 # -- Send a message to the server
 folder = "../Session-04/"
 s = Seq()
-sequence = s.read_fasta(folder + "U5.txt")
+sequence = s.read_fasta(folder + "FRAT1.txt")
 c.debug_talk(f"Sending U5 gene to the server... ")
 c.debug_talk(str(sequence))
