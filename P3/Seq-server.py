@@ -1,10 +1,13 @@
 import socket
-import Seq1
+from Seq1 import Seq
 import termcolor
 
 IP = "127.0.0.1"
-PORT = 8082
+PORT = 8080
+list_bases = ["A", "C", "G", "T"]
 list_number = ["AC\n", "ACTGA\n", "CTA\n", "TGCA\n", "TTA\n"]
+folder = "../Session-04/"
+s1 = Seq()
 
 # --- Step 1: creating the socket
 ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -36,6 +39,7 @@ while True:
         # --- Step 5: Receiving information from the client
         msg_raw = cs.recv(2000)
         msg = msg_raw.decode()
+        command = msg[msg.find(" ") + 1:]
 
         # --- Step 5: Send a response message to the client
         if msg == "PING":
@@ -51,5 +55,33 @@ while True:
                     cs.send(element.encode())
                     print(element)
                 index += 1
+
+        elif msg.startswith("INFO"):
+            termcolor.cprint("INFO", "green")
+            sequence = Seq(msg[5:])
+            print(f"sequence: {sequence}")
+            cs.send(str(sequence).encode())
+            print(f"total length: {sequence.len()}")
+            for base in list_bases:
+                print(f"{base}: {sequence.count_base(base)} ({round(sequence.count_base(base) / sequence.len() * 100, 2)} %)")
+                # respond = ("Sequence: " + str(sequence) + "\n" + "Total length: " + str(sequence.len()) + "\n" + sequence.count_base(base))
+                # cs.send(respond.encode())
+
+        elif msg.startswith("COMP"):
+            sequence = Seq(msg[5:])
+            print(sequence.complement() + "\n")
+            cs.send(str(sequence.complement()).encode())
+
+        elif msg.startswith("REV"):
+            sequence = Seq(msg[4:])
+            print(sequence.reverse() + "\n")
+            cs.send(str(sequence.reverse()).encode())
+
+        elif msg.startswith("GENE"):
+            termcolor.cprint("GENE", "green")
+            sequence = msg[5:]
+            gene = s1.read_fasta(folder + sequence + ".txt")
+            print(gene)
+            cs.send(str(gene).encode())
 
         cs.close()
