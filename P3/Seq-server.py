@@ -5,7 +5,7 @@ import termcolor
 IP = "127.0.0.1"
 PORT = 8080
 list_bases = ["A", "C", "G", "T"]
-list_number = ["AC\n", "ACTGA\n", "CTA\n", "TGCA\n", "TTA\n"]
+list_number = ["ACCGT\n", "ACTGA\n", "CTA\n", "TGCA\n", "TTA\n"]
 folder = "../Session-04/"
 s1 = Seq()
 

@@ -8,7 +8,7 @@ print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
 # -- Parameters of the server to talk to
 IP = "127.0.0.1"
 PORT = 8080
-test_sequence = "ACTGGCCCATGCAGTC"
+test_sequence = "ACCGT"
 # -- Create a client object
 c = Client(IP, PORT)
 
