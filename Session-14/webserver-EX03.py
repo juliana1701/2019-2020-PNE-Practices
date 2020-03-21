@@ -40,14 +40,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Message to send back to the client
         if request == "/" or request == "/index.html":
-            filename = "index.html"
-            contents = read(folder2 + filename)
-            self.send_response(200)
+                filename = "index.html"
+                contents = read(folder2 + filename)
+                self.send_response(200)
         else:
-            filename = "Error.html"
-            contents = read(folder + filename)
-            self.send_response(404)
-
+            try:
+                file = request.split(".")[0]
+                filename = file + ".html"
+                contents = read(folder2 + filename)
+                self.send_response(200)
+            except FileNotFoundError:
+                filename = "Error.html"
+                contents = read(folder + filename)
+                self.send_response(404)
 
         # Define the content-type header:
         self.send_header('Content-Type', 'text/html')
