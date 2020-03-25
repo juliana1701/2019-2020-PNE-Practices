@@ -36,7 +36,7 @@ class Seq:
             for element in self.strbases:
                 if element == base:
                     counter += 1
-            return counter
+            return counter, round((counter / self.len()) * 100, 1)
 
     def count(self):
         d = {"A": 0, "C": 0, "T": 0, "G": 0}
@@ -82,6 +82,7 @@ class Seq:
         content = file_contents.split("\n")[1:]
         self.strbases = "".join(content)
         return self
+
 
 def generate_seqs(pattern, number):
     list_seqs = []
