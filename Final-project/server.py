@@ -1,16 +1,32 @@
 import http.server
+import http.client
 import socketserver
 import termcolor
 from pathlib import Path
-from Seq1 import Seq
+import json
+
+def client_get_species(endpoint):
+    PORT = 8080
+    SERVER = 'rest.ensembl.org'
+    print(f"\nConnecting to server: {SERVER}:{PORT}\n")
+    conn = http.client.HTTPConnection(SERVER, timeout=100)
+    try:
+        conn.request("GET", endpoint)
+    except ConnectionRefusedError:
+        print("ERROR! Cannot connect to the Server")
+        exit()
+    r1 = conn.getresponse()
+    print(f"Response received!: {r1.status} {r1.reason}\n")
+    data = r1.read().decode("utf-8")
+    data1 = json.loads(data)
+    return data1
+
 
 # Define the Server's port
 PORT = 8080
-folder = "../Session-04/"
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
-list_number = ["ACCGT\n", "ACTGA\n", "CTA\n", "TGCA\n", "TTA\n"]
 
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
@@ -29,145 +45,67 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         firts_argument = arguments[0]
 
         if firts_argument == "/":
-            contents = Path("form-4.html").read_text()
+            contents = Path("main-page.html").read_text()
             error_code = 200
 
-        elif firts_argument == "/ping":
-            contents = f"""
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="utf-8">
-                            <title>RESULT</title>
-                        </head>
-                        <h1>PING OK! </h1>
-                        <body>
-                        <p>The SEQ2 server is running</p>
-                        <a href="/">Main page</a>
-                        </body></html>
-                        """
-            error_code = 200
-        elif firts_argument == "/get":
-            second_argument = arguments[1].split("=")[1]
-            value = int(second_argument)
-            contents = f"""
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="utf-8">
-                            <title>RESULT</title>
-                        </head>
-                        <h1>Sequence number {value} </h1>
-                        <body>
-                        <p>{list_number[value]}</p>
-                        <a href="/">Main page</a>
-                        </body></html>
-                        """
-            error_code = 200
-        elif firts_argument == "/gene":
-            second_argument = arguments[1].split("=")[1]
-            gene = Seq()
-            sequence = gene.read_fasta(folder + second_argument + ".txt")
-            contents = f"""
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="utf-8">
-                            <title>RESULT</title>
-                        </head>
-                        <h1>Gene: {second_argument} </h1>
-                        <body>
-                        <textarea readonly rows="20" cols="80"> {sequence} </textarea>
-                        <br>
-                        <a href="/">Main page</a>
-                        </body></html>
-                        """
-            error_code = 200
-        elif firts_argument == "/operation":
-            second_argument = arguments[1].split("&")[0]
-            third_argument = arguments[1].split("&")[1]
-            sequence = second_argument.split("=")[1]
-            seq1 = Seq(sequence)
-            operation = third_argument.split("=")[1]
-            if operation == "info":
-                sl = seq1.len()
-                count_a = seq1.count_base('A')[0]
-                percent_a = seq1.count_base('A')[1]
-                count_c = seq1.count_base('C')[0]
-                percent_c = seq1.count_base('C')[1]
-                count_g = seq1.count_base('G')[0]
-                percent_g = seq1.count_base('G')[1]
-                count_t = seq1.count_base('T')[0]
-                percent_t = seq1.count_base('T')[1]
-
-                result = f"""
-                               <p>Total length: {sl}</p>
-                               <p>A: {count_a} ({percent_a}%)</p>
-                               <p>C: {count_c} ({percent_c}%)</p>
-                               <p>G: {count_g} ({percent_g}%)</p>
-                               <p>T: {count_t} ({percent_t}%)</p>"""
+        elif firts_argument == "/listSpecies":
+            second_argument = arguments[1]
+            third_argument = second_argument.split("=")[1]
+            species = client_get_species("info/species?content-type=application/json")["species"]
+            if third_argument == "":
+                contents = f"""
+                                <!DOCTYPE html>
+                                <html lang="en">
+                                <head>
+                                    <meta charset="utf-8">
+                                    <title>List of species</title>
+                                </head>
+                                <body style="background-color: lightblue">
+                                <p>Total number of species is: 267 </p>
+                                <p>The limit you have selected is:{267} </p>
+                                <p>The names of the species are:</p>
+                                </body></html>
+                                """
+                error_code = 200
+                for element in species:
+                    contents += f"""<p> · {element["common_name"]} </p>"""
+            elif 267 >= int(third_argument):
                 contents = f"""
                             <!DOCTYPE html>
                             <html lang="en">
                             <head>
                                 <meta charset="utf-8">
-                                <title>RESULT</title>
+                                <title>List of species</title>
                             </head>
-                            <h2>Sequence</h2>
-                            <body>
-                            {sequence}
-                            <br>
-                             <h2>Operation:</h2>
-                            {operation}
-                            <br>
-                            <h2>Result:</h2>
-                            {result}
-                            <br>
-                            <a href="/">Main page</a>
+                            <body style="background-color: lightblue">
+                            <p>Total number of species is: 267 </p>
+                            <p>The limit you have selected is: 267 </p>
+                            <p>The names of the species are:</p>
                             </body></html>
-                        """
-            elif operation == "Comp":
+                            """
+                error_code = 200
+                count = 0
+                for element in species:
+                    if count < int(third_argument):
+                        contents += f'''<p> · {element["common_name"]}</p>'''
+                    count += 1
+            else:
                 contents = f"""
-                            <!DOCTYPE html>
-                            <html lang="en">
-                            <head>
-                                <meta charset="utf-8">
-                                <title>RESULT</title>
-                            </head>
-                            <h2>Sequence</h2>
-                            <body>
-                            {sequence}
-                            <br>
-                             <h2>Operation:</h2>
-                            {operation}
-                            <br>
-                            <h2>Result:</h2>
-                            {seq1.complement()}
-                            <a href="/">Main page</a>
-                            </body></html>
-                        """
-            elif operation == "Rev":
-                contents = f"""
-                            <!DOCTYPE html>
-                            <html lang="en">
-                            <head>
-                                <meta charset="utf-8">
-                                <title>RESULT</title>
-                            </head>
-                            <h2>Sequence</h2>
-                            <body>
-                            {sequence}
-                            <br>
-                             <h2>Operation:</h2>
-                            {operation}
-                            <br>
-                            <h2>Result:</h2>
-                            {seq1.reverse()}
-                            <br>
-                            <a href="/">Main page</a>
-                            </body></html>
-                        """
-            error_code = 200
+                                <!DOCTYPE html>
+                                <html lang="en">
+                                <head>
+                                    <meta charset="utf-8">
+                                    <title>List of species</title>
+                                </head>
+                                <body style="background-color: lightblue">
+                                <p>Total number of species is: 267 </p>
+                                <p>The limit you have selected is:{third_argument}</p>
+                                <p>The names of the species are:</p>
+                                </body></html>
+                                """
+                error_code = 200
+                for element in species:
+                    contents += f"""<p> · {element["common_name"]} </p>"""
         else:
             contents = Path('Error.html').read_text()
             error_code = 404
