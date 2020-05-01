@@ -1,0 +1,488 @@
+Test report example
+====================
+
+
+---> No endpoint
+
+*TEST 1:
+
+*Input
+
+http://127.0.0.1:8080/
+
+*Output
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>main-page</title>
+  </head>
+  <h1>Browsing Human and Vertebrates genome</h1>
+  <h2>BASIC Level Services</h2>
+  <body style="background-color: lightgreen">
+  <form action="listSpecies" method="get">
+    "
+        1)List of species in the genome database
+        "
+        <br>
+        "
+        Limit:"
+         <input type="text" name="limit">
+          <br>
+      <input type="submit" value="Send">
+       <br>
+        <br>
+        </form>
+        <form action="karyotype" method="get">
+        "
+        2) Information about the Karyotype
+        "
+       <br>
+       "
+        Select the species:"
+         <input type="text" name="specie">
+         <br>
+      <input type="submit" value="Send">
+            <br>
+            <br>
+    </form>
+    <form action="chromosomeLength" method="get">
+    "
+        3) Chromosome Length
+        "
+        <br>
+        "
+       Select the species:"
+        <input type="text" name="specie">
+            <br>
+            "
+        Select a chromosome:"
+         <input type="text" name="chromo">
+        <br>
+      <input type="submit" value="Send">
+        <br>
+    </form>
+    </body>
+    </html>
+
+
+---> listSpecies endpoint
+
+* TEST 1:
+
+* Input:
+
+http://127.0.0.1:8080/listSpecies?limit=10
+
+* output:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>List of species</title>
+</head>
+<body style="background-color: lightblue">
+<p>Total number of species is: 267 </p>
+<p>The limit you have selected is: 6 </p>
+<p>The names of the species are:</p>
+<p> · Domestic ferret</p>
+<p> · pig</p>
+<p> · Periophtalamus magnuspinnatus</p>
+<p> · horned golden-line barbel</p>
+<p> · western mosquitofish</p>
+<p> · domestic cat</p>
+</body>
+</html>
+
+*TEST 2
+
+*Input
+
+http://127.0.0.1:8080/listSpecies?limit=
+
+*Output
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>List of species</title>
+</head>
+<body style="background-color: lightblue">
+<p>Total number of species is: 267 </p>
+<p>The limit you have selected is: 6 </p>
+<p>The names of the species are:</p>
+<p> · Ferret</p>
+<p> · Pig</p>
+<p> · Periophthalmus magnuspinnatus</p>
+<p> · Horned golden-line barbel</p>
+<p> · Western mosquitofish</p>
+<p> · Cat</p>
+<p> · Damara mole rat</p>
+<p> · Sheep</p>
+<p> · Greater amberjack</p>
+<p> · Goat</p>
+<p> · Shortfin molly</p>
+<p> · Drill</p>
+<p> · Upper Galilee mountains blind mole rat</p>
+<p> · Asian bonytongue</p>
+<p> · Siamese fighting fish</p>
+<p> · Red fox</p>
+<p> · Mallard</p>
+<p> · Gilthead seabream</p>
+<p> · Chicken</p>
+<p> · Olive baboon</p>
+<p> · Common carp german mirror</p>
+<p> · Sperm whale</p>
+<p> · Megabat</p>
+<p> · Chinese hamster CriGri</p>
+<p> · Reedfish</p>
+<p> · Stickleback</p>
+<p> · C.savignyi</p>
+<p> · Dog - Basenji</p>
+<p> · Platyfish</p>
+<p> · Blue tilapia</p>
+<p> · Donkey</p>
+<p> · Turkey</p>
+<p> · Mouse 129S1/SvImJ</p>
+<p> · Mouse FVB/NJ</p>
+<p> · Small tree finch</p>
+<p> · Zebra finch</p>
+<p> · Ryukyu mouse</p>
+<p> · Wallaby</p>
+<p> · Budgerigar</p>
+<p> · Pig - Hampshire</p>
+<p> · Tasmanian devil</p>
+<p> · Wild yak</p>
+<p> · Medium ground-finch</p>
+<p> · Burton's mouthbrooder</p>
+<p> · Bolivian squirrel monkey</p>
+<p> · Mouse C57BL/6NJ</p>
+<p> · Live sharksucker</p>
+<p> · Dolphin</p>
+<p> · Pig - Berkshire</p>
+<p> · Anole lizard</p>
+<p> · Guppy</p>
+<p> · Lesser hedgehog tenrec</p>
+<p> · Pig - Bamei</p>
+<p> · Indian glassy fish</p>
+<p> · Shrew</p>
+<p> · Yellow-billed parrot</p>
+<p> · Pig - Pietrain</p>
+<p> · Black snub-nosed monkey</p>
+<p> · Pig - Jinhua</p>
+<p> · Squirrel</p>
+<p> · Pig - Tibetan</p>
+<p> · Clown anemonefish</p>
+<p> · American bison</p>
+<p> · Pink-footed goose</p>
+<p> · Sailfin molly</p>
+<p> · Dingo</p>
+<p> · Ma's night monkey</p>
+<p> · Common canary</p>
+<p> · Zig-zag eel</p>
+<p> · Hyrax</p>
+<p> · Mouse AKR/J</p>
+<p> · Spiny chromis</p>
+<p> · Makobe Island cichlid</p>
+<p> · Pig USMARC</p>
+<p> · Common carp hebao red</p>
+<p> · Vervet-AGM</p>
+<p> · Chimpanzee</p>
+<p> · Beluga whale</p>
+<p> · Asiatic black bear</p>
+<p> · Midas cichlid</p>
+<p> · Alpaca</p>
+<p> · Pig - Landrace</p>
+<p> · Sloth</p>
+<p> · Nile tilapia</p>
+<p> · Drosophila melanogaster</p>
+<p> · Rabbit</p>
+<p> · Kakapo</p>
+<p> · Saccharomyces cerevisiae</p>
+<p> · Caenorhabditis elegans</p>
+<p> · Swan goose</p>
+<p> · Dog</p>
+<p> · Yellowtail amberjack</p>
+<p> · Chinook salmon</p>
+<p> · Polar bear</p>
+<p> · White-throated sparrow</p>
+<p> · Tarsier</p>
+<p> · Brazilian guinea pig</p>
+<p> · Rainbow trout</p>
+<p> · Rufous-capped babbler</p>
+<p> · Leopard</p>
+<p> · Golden Hamster</p>
+<p> · Barramundi perch</p>
+<p> · Ugandan red Colobus</p>
+<p> · Daurian ground squirrel</p>
+<p> · Common wombat</p>
+<p> · Tropical clawed frog</p>
+<p> · Channel catfish</p>
+<p> · Ocean sunfish</p>
+<p> · Sheepshead minnowv</p>
+<p> · Blind barbel</p>
+<p> · Arctic ground squirrel</p>
+<p> · Chinese hamster PICR</p>
+<p> · Ruff</p>
+<p> · Japanese medaka HNI</p>
+<p> · Lion</p>
+<p> · Hagfish</p>
+<p>· Opossum</p>
+<p> · Blunt-snouted clingfish</p>
+<p> · Atlantic salmon</p>
+<p> · Mouse NOD/ShiLtJ</p>
+<p> · Fugu</p>
+<p> · Chinese hamster CHOK1GS</p>
+<p> · Great Tit</p>
+<p> · Mouse A/J</p>
+<p> · Northern American deer </p>
+<p> · Human</p>
+<p> · Japanese quail</p>
+<p> · Kangaroo rat</p>
+<p> · Angola colobus</p>
+<p> · Blue tit</p>
+<p> · Indian medaka</p>
+<p> · Common snapping turtle</p>
+<p> · Little spotted kiwi</p>
+<p> · Sooty mangabey</p>
+<p> · Golden snub-nosed monkey</p>
+<p> · Chinese medaka</p>
+<p> · American beaver</p>
+<p> · Mouse PWK/PhJ</p>
+<p> · Komodo dragon</p>
+<p> · Mangrove rivulus</p>
+<p> · Large yellow croaker</p>
+<p> · Mouse BALB/cJ</p>
+<p> · Bonobo</p>
+<p> · Mexican tetra</p>
+<p> · Steppe mouse</p></p>
+<p> · Elephant</p>
+<p> · Central bearded dragon</p>
+<p> · Golden-line barbel</p>
+<p> · Tiger tail seahorse</p>
+<p> · Lyretail cichlid</p>
+<p> · Ring-necked pheasant</p>
+<p> · American mink</p>
+<p> · Three-toed box turtle</p>
+<p> · Pig - Largewhite</p>
+<p> · Hybrid - Bos Taurus</p>
+<p> · Electric eel</p>
+<p> · Argentine black and white tegu</p>
+<p> · Turbot</p>
+<p> · Tree Shrew</p>
+<p> · Goldfish</p>
+<p> · Monterrey platyfish</p>
+<p> · Eurasian sparrowhawk</p>
+<p> · Naked mole-rat male</p>
+<p> · Ballan wrasse</p>
+<p> · Gouldian finch</p>
+<p> · Mouse DBA/2J</p>
+<p> · Golden-collared manakin</p>
+<p> · Orbiculate cardinalfish</p>
+<p> · Mouse NZO/HlLtJ</p>
+<p> · Microbat</p>
+<p> · Goodes thornscrub tortoise</p>
+<p> · Mongolian gerbil</p>
+<p> · Dark-eyed junco</p>
+<p> · Japanese medaka HdrR</p>
+<p> · Blue-ringed sea krait</p>
+<p> · Climbing perch</p>
+<p> · Tongue sole</p>
+<p> · Naked mole-rat female</p>
+<p> · Pachon cavefish</p>
+<p> · Emu</p>
+<p> · Eastern happy</p>
+<p> · Mouse C3H/HeJ</p>
+<p> · Eastern brown snake</p>
+<p> · Spotted gar</p>
+<p> · Javanese ricefish</p>
+<p> · Degu</p>
+<p> · Shrew mouse</p>
+<p> · Dog - Great Dane</p>
+<p> · Round goby</p>
+<p> · Golden pheasant</p>
+<p> · Crab-eating macaque</p>
+<p> · Duck</p>
+<p> · Orange clownfish</p>
+<p> · Tuatara</p>
+<p> · Pinecone soldierfish</p>
+<p> · Panda</p>
+<p> · Common carp huanghe</p>
+<p> · Coelacanth</p>
+<p> · Mouse CBA/J</p>
+<p> · Chacoan peccary</p>
+<p> · Platypus</p>
+<p> · Pig - Wuzhishan</p>
+<p> · Horse</p>
+<p> · Huchen</p>
+<p> · Long-tailed chinchilla</p>
+<p> · C.intestinalis</p>
+<p> · Mouse WSB/EiJ</p>
+<p> · Elephant shark</p>
+<p> · Jewelled blenny</p>
+<p> · Helmeted guineafowl</p>
+<p> · Australian saltwater crocodile</p>
+<p> · Mouse Lemur</p>
+<p> · Pig - Rongchang</p>
+<p> · Koala</p>
+<p> · Red-bellied piranha</p>
+<p> · Common carp</p>
+<p> · Mainland tiger snake</p>
+<p> · Abingdon island giant tortoise</p>
+<p> · Bengalese finch</p>
+<p> · Gorilla</p>
+<p> · Greater bamboo lemur</p>
+<p> · Cow</p>
+<p> · Amazon molly</p>
+<p> · Zebrafish</p>
+<p> · Okarito brown kiwi</p>
+<p> · Meerkat</p>
+<p> · Cod</p>
+<p> · Prairie vole</p>
+<p> · Domestic yak</p>
+<p> · Agassiz's desert tortoise</p>
+<p> · Alpine marmot</p>
+<p> · Arabian camel</p>
+<p> · Gibbon</p>
+<p> · Canada lynx</p>
+<p> · Coquerel's sifaka</p>
+<p> · Paramormyrops kingsleyae</p>
+<p> · Northern pike</p>
+<p> · Guinea Pig</p>
+<p> · Mouse CAST/EiJ</p>
+<p> · Blue-crowned manakin</p>
+<p> · Common wall lizard</p>
+<p> · Golden eagle</p>
+<p> · Pika</p>
+<p> · Great spotted kiwi</p>
+<p> · Lesser Egyptian jerboa</p>
+<p> · Armadillo</p>
+<p> · Rat</p>
+<p> · Atlantic herring</p>
+<p> · Mummichog</p>
+<p> · Greater horseshoe bat</p>
+<p> · Japanese medaka HSOK</p>
+<p> · Indian peafowl</p>
+<p> · Lamprey</p>
+<p> · Burrowing owl</p>
+<p> · Brown trout</p>
+<p> · Swamp eel</p>
+<p> · Pig - Meishan</p>
+<p> · Capuchin</p>
+<p> · Flycatcher</p>
+<p> · Hybrid - Bos Indicus</p>
+<p> · Spoon-billed sandpiper</p>
+<p> · Gelada</p>
+<p> · Tiger</p>
+<p> · Chilean tinamou</p>
+<p> · Channel bull blenny</p>
+<p> · Mouse LP/J</p>
+<p> · Tetraodon</p>
+<p> · American black bear</p>
+<p> · European seabass</p>
+<p> · West African mud turtle</p>
+<p> · Silver-eye</p>
+<p> · Hedgehogv</p>
+<p> · Macaque</p>
+<p> · Siberian musk deer</p>
+<p> · Denticle herring</p>
+<p> · African ostrich</p>
+<p> · Chinese softshell turtle</p>
+<p> · Painted turtle</p>
+<p> · Bushbaby</p>
+<p> · Pig-tailed macaque</p>
+<p> · Marmoset</p>
+<p> · Algerian mouse</p>
+<p> · Mouse</p>
+<p> · Bicolor damselfish</p>
+<p> · Zebra mbuna</p>
+
+</body>
+</html>
+
+
+
+---> karyotype endpoint
+
+*TEST 1
+
+*Input
+
+http://127.0.0.1:8080/karyotype?specie=mouse
+
+*Output
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Name of chromosomes:</title>
+</head>
+<body style="background-color: pink">
+<p>The name of the chromosomes are: </p>
+<p> · 1 </p>
+<p> · 2 </p>
+<p> · 3 </p>
+<p> · 4 </p>
+<p> · 5 </p>
+<p> · 6 </p>
+<p> · 7 </p>
+<p> · 8 </p>
+<p> · 9 </p>
+<p> · 10 </p>
+<p> · 11 </p>
+<p> · 12 </p>
+<p> · 13 </p>
+<p> · 14 </p>
+<p> · 15 </p>
+<p> · 16 </p>
+<p> · 17 </p>
+<p> · 18 </p>
+<p> · 19 </p>
+<p> · X </p>
+<p> · Y </p>
+<p> · MT </p>
+</body>
+</html>
+
+---> chromosomeLength endpoint
+
+TEST 1
+
+*Input
+
+http://127.0.0.1:8080/chromosomeLength?specie=mouse&chromo=18
+
+*Output
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chromosome length</title>
+</head>
+<body style="background-color: plum">
+<p> The length of the chromosome is: 90702639</p>
+</body>
+</html>
+
+TEST 2
+
+*Input
+
+http://127.0.0.1:8080/chromosomeLength?specie=human&chromo=X
+
+*Output
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chromosome length</title>
+</head>
+<body style="background-color: plum">
+<p> The length of the chromosome is: 156040895</p>
+</body>
+</html>
