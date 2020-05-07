@@ -151,7 +151,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             end = third.split("=")[1]
             data = client_get_species("overlap/region/human/" + chromo + ":" + start + "-" + end +
                                       "?feature=gene;content-type=application/json")
-            contents = html_file("moccasin", "Sequence of a human gene")
+            contents = html_file("moccasin", "List of human genes")
             for gene in data:
                 contents += f"<p> · {gene['external_name']} </p>"
             error_code = 200
