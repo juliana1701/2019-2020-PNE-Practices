@@ -83,6 +83,7 @@ http://127.0.0.1:8080/listSpecies?limit=10
     <title>List of species</title>
 </head>
 <body style="background-color: lightblue">
+<h1>List of species</h1>
 <p>Total number of species is: 267 </p>
 <p>The limit you have selected is: 6 </p>
 <p>The names of the species are:</p>
@@ -110,6 +111,7 @@ http://127.0.0.1:8080/listSpecies?limit=
     <title>List of species</title>
 </head>
 <body style="background-color: lightblue">
+<h1>List of species</h1>
 <p>Total number of species is: 267 </p>
 <p>The limit you have selected is: 6 </p>
 <p>The names of the species are:</p>
@@ -421,6 +423,7 @@ http://127.0.0.1:8080/karyotype?specie=mouse
     <title>Name of chromosomes:</title>
 </head>
 <body style="background-color: pink">
+<h1> Name of chromosomes </h1>
 <p>The name of the chromosomes are: </p>
 <p> · 1 </p>
 <p> · 2 </p>
@@ -464,6 +467,7 @@ http://127.0.0.1:8080/chromosomeLength?specie=mouse&chromo=18
     <title>Chromosome length</title>
 </head>
 <body style="background-color: plum">
+<h1>Chromosome length</h1>
 <p> The length of the chromosome is: 90702639</p>
 </body>
 </html>
@@ -483,6 +487,7 @@ http://127.0.0.1:8080/chromosomeLength?specie=human&chromo=X
     <title>Chromosome length</title>
 </head>
 <body style="background-color: plum">
+<h1>Chromosome length</h1>
 <p> The length of the chromosome is: 156040895</p>
 </body>
 </html>
