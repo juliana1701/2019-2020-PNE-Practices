@@ -4,7 +4,9 @@ import socketserver
 import termcolor
 from pathlib import Path
 import json
+from Seq1 import Seq
 
+list_bases = ["A", "C", "G", "T"]
 
 def client_get_species(endpoint):
     PORT = 8080
@@ -32,24 +34,19 @@ def html_file(color, title):
                 <title>{title}</title>
             </head>
             <body style="background-color: {color}">
+            <h1>{title}</h1>
             </body></html>
             """
 
 
-# Define the Server's port
 PORT = 8080
 
-# -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
 
 
-# Class with our Handler. It is a called derived from BaseHTTPRequestHandler
-# It means that our class inheritates all his methods and properties
 class TestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
-        """This method is called whenever the client invokes the GET method
-        in the HTTP protocol request"""
 
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
@@ -93,7 +90,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif firts_argument == "/karyotype":
             second_argument = arguments[1]
             third_argument = second_argument.split("=")[1]
-            species = client_get_species("info/assembly/" + third_argument + "?content-type=application/json")["karyotype"]
+            species = client_get_species("info/assembly/" + third_argument +
+                                         "?content-type=application/json")["karyotype"]
             contents = html_file("pink", "Name of chromosomes:")
             contents += f"""<p>The names of the chromosomes are: </p>"""
             error_code = 200
@@ -104,46 +102,81 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             third_argument, fourth_argument = second_argument.split("&")
             specie = third_argument.split("=")[1]
             chromosome = fourth_argument.split("=")[1]
-            species = client_get_species("info/assembly/" + specie + "?content-type=application/json")["top_level_region"]
+            species = client_get_species("info/assembly/" + specie +
+                                         "?content-type=application/json")["top_level_region"]
             contents = html_file("plum", "Chromosome length")
             for element in species:
                 if element["coord_system"] == "chromosome":
                     if element["name"] == chromosome:
                         contents += f"""<p> The length of the chromosome is: {element["length"]} </p>"""
             error_code = 200
+        elif firts_argument == "/geneSeq":
+            second_argument = arguments[1]
+            third_argument = second_argument.split("=")[1]
+            id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{third_argument}?content-type=application/json""")[0]["id"]
+            data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
+            contents = html_file("aquamarine", "Sequence of a human gene")
+            contents += f'<p> The sequence of gene {third_argument} is: </p>'
+            contents += f'<textarea rows = "100" "cols = 500"> {data["seq"]} </textarea>'
+            error_code = 200
+        elif firts_argument == "/geneInfo":
+            second_argument = arguments[1]
+            third_argument = second_argument.split("=")[1]
+            id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{third_argument}?content-type=application/json""")[0]["id"]
+            data = client_get_species(f"""/lookup/id/{id_gen}?content-type=application/json""")
+            contents = html_file("palevioletred", "Information of a human gene")
+            contents += f'<p> The gene is on chromosome {data["seq_region_name"]} </p>'
+            contents += f'<p> The start of the gene is: {data["start"]} </p>'
+            contents += f'<p> The end of the gene is: {data["end"]}</p>'
+            contents += f'<p> The length of the gene is: {data["end"] - data["start"]}</p>'
+            contents += f'<p> The identification of the gene is: {id_gen}</p>'
+            error_code = 200
+        elif firts_argument == "/geneCalc":
+            second_argument = arguments[1]
+            third_argument = second_argument.split("=")[1]
+            id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{third_argument}?content-type=application/json""")[0]["id"]
+            data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
+            sequence = data["seq"]
+            gene_seq = Seq(sequence)
+            contents = html_file("thistle", "Length and percentage of basis of the gene")
+            contents += f"The total lenght of the sequence is: {gene_seq.len()}"
+            for element in list_bases:
+                contents += f"<p>Base {element}: Percentage: ({gene_seq.count_base(element)[1]}%)</p>"
+            error_code = 200
+        elif firts_argument == "/geneList":
+            second_argument = arguments[1]
+            first, second, third = second_argument.split("&")
+            chromo = first.split("=")[1]
+            start = second.split("=")[1]
+            end = third.split("=")[1]
+            data = client_get_species("overlap/region/human/" + chromo + ":" + start + "-" + end +
+                                      "?feature=gene;content-type=application/json")
+            contents = html_file("moccasin", "Sequence of a human gene")
+            for gene in data:
+                contents += f"<p> · {gene['external_name']} </p>"
+            error_code = 200
         else:
             contents = Path('Error.html').read_text()
             error_code = 404
 
-        # Generating the response message
-        self.send_response(error_code)  # -- Status line: OK!
+        self.send_response(error_code)
 
-        # Define the content-type header:
         self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(str.encode(contents)))
 
-        # The header is finished
         self.end_headers()
 
-        # Send the response message
         self.wfile.write(str.encode(contents))
 
         return
 
 
-# ------------------------
-# - Server MAIN program
-# ------------------------
-# -- Set the new handler
 Handler = TestHandler
 
-# -- Open the socket server
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
 
     print("Serving at PORT", PORT)
 
-    # -- Main loop: Attend the client. Whenever there is a new
-    # -- clint, the handler is called
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
