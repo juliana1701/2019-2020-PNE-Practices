@@ -55,109 +55,252 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         arguments = path.split('?')
         firts_argument = arguments[0]
 
-        if firts_argument == "/":
-            contents = Path("main-page.html").read_text()
-            error_code = 200
+        try:
 
-        elif firts_argument == "/listSpecies":
-            second_argument = arguments[1]
-            third_argument = second_argument.split("=")[1]
-            species = client_get_species("info/species?content-type=application/json")["species"]
-            contents = html_file("lightblue", "List of species")
-            if third_argument == "":
-                contents += f""" <p>The limit you have selected is:{267} </p>
-                                <p>The names of the species are:</p>"""
+            if firts_argument == "/":
+                contents = Path("main-page.html").read_text()
                 error_code = 200
-                for element in species:
-                    contents += f"""<p> · {element["display_name"]} </p>"""
-            elif 267 >= int(third_argument):
-                contents += f""" <p>Total number of species is: 267 </p>
-                            <p>The limit you have selected is: {third_argument}</p>
-                            <p>The names of the species are:</p>"""
+
+            elif firts_argument == "/listSpecies":
                 error_code = 200
-                count = 0
-                for element in species:
-                    if count < int(third_argument):
-                        contents += f'''<p> · {element["display_name"]}</p>'''
-                    count += 1
+                second_argument = arguments[1]
+                new_argument = second_argument.split("&")
+                if len(new_argument) == 2:
+                    parameter, json = second_argument.split("&")
+                    third_argument = parameter.split("=")[1]
+                    data = client_get_species("info/species?content-type=application/json")
+
+                    if json == "json=1":
+                        contents_1 = data["species"]
+                        contents = json.dumps(contents_1)
+                    else:
+                        species = data["species"]
+                        contents = html_file("lightblue", "List of species")
+                        contents += f"""<h1> SPECIES ON DATABASE OF ENSEMBL </h1>"""
+                        contents += f"""<p>Total number of species is 267</p>"""
+                        contents += f"""<p>The limit you have selected is: {third_argument}</p>"""
+                        contents += f"""<p>The names of the species are:</p>"""
+                        if third_argument == "":
+                            for element in species:
+                                contents += f"""<p> - {element["display_name"]}</p> """
+                        elif 267 >= int(third_argument):
+                            counter = 0
+                            for element in species:
+                                if counter < int(third_argument):
+                                    contents += f"""<p> - {element["display_name"]}</p> """
+                                counter += 1
+                        else:
+                            for element in species:
+                                contents += f"""<p> - {element["display_name"]}</p> """
+                elif len(new_argument) == 1:
+                    third_argument = second_argument.split("=")[1]
+                    data = client_get_species("info/species?content-type=application/json")
+                    species = data["species"]
+                    contents = html_file("lightblue", "List of species")
+                    contents += f"""<p>Total number of species is 267</p>"""
+                    if third_argument == "":
+                        contents += f""" <p>The limit you have selected is:{267} </p>
+                                        <p>The names of the species are:</p>"""
+                        for element in species:
+                            contents += f"""<p> · {element["display_name"]} </p>"""
+                    elif 267 >= int(third_argument):
+                        contents += f""" <p>Total number of species is: 267 </p>
+                                    <p>The limit you have selected is: {third_argument}</p>
+                                    <p>The names of the species are:</p>"""
+                        count = 0
+                        for element in species:
+                            if count < int(third_argument):
+                                contents += f'''<p> · {element["display_name"]}</p>'''
+                            count += 1
+                    else:
+                        contents += f"""<p>Total number of species is: 267 </p>
+                                        <p>The limit you have selected is:{third_argument}</p>
+                                        <p>The names of the species are:</p>"""
+                        for element in species:
+                            contents += f"""<p> · {element["display_name"]} </p>"""
+
+            elif firts_argument == "/karyotype":
+                error_code = 200
+                second_argument = arguments[1]
+                new_argument = second_argument.split("&")
+                if len(new_argument) == 2:
+                    parameter, json = second_argument.split("&")
+                    third_argument = parameter.split("=")[1]
+                    data = client_get_species(f"/info/assembly/{third_argument}?content-type=application/json")
+
+                    if json == "json-1":
+                        contents = data["karyotype"]
+                    else:
+                        karyotype = data["karyotype"]
+                        contents = html_file("lightgreen", "Karyotype")
+                        contents += f"""<h1> KARYOTYPE </h1>"""
+                        contents += f"""<p>The names of the chromosomes from {third_argument} are:</p>"""
+                        for chromosome in karyotype:
+                            contents += f"""<p> - {chromosome}</p>"""
+                elif len(new_argument) == 1:
+                    third_argument = second_argument.split("=")[1]
+                    species = client_get_species("info/assembly/" + third_argument +
+                                             "?content-type=application/json")["karyotype"]
+                    contents = html_file("pink", "Name of chromosomes:")
+                    contents += f"""<p>The names of the chromosomes are: </p>"""
+                    for element in species:
+                        contents += f"""<p> · {element} </p>"""
+
+            elif firts_argument == "/chromosomeLength":
+                error_code = 200
+                second_argument = arguments[1]
+                new_argument = second_argument.split("&")
+                if len(new_argument) == 3:
+                    specie, chromosome, json = second_argument.split("&")
+                    specie_1 = specie.split("=")[1]
+                    chromo = chromosome.split("=")[1]
+                    species = client_get_species("info/assembly/" + specie_1 +
+                                             "?content-type=application/json")["top_level_region"]
+
+                    if json == "json=1":
+                        contents = species["top_level_region"]
+                    else:
+                        info = species["top_level_region"]
+                        contents = html_file("plum", "Chromosome length")
+                        contents += "<h1> CHROMOSOME LENGTH </h1>"
+                        for chromosome in info:
+                            if chromosome["coord_system"] == "chromosome":
+                                if chromosome["name"] == chromo:
+                                    c_lenght = chromosome['length']
+                                    contents += f"<p>The length of the chromosome {chromo} is: {c_lenght}</p>"
+                elif len(new_argument) == 2:
+                    specie, chromosome = second_argument.split("&")
+                    specie_1 = specie.split("=")[1]
+                    chromo = chromosome.split("=")[1]
+                    species = client_get_species("info/assembly/" + specie_1 +
+                                             "?content-type=application/json")["top_level_region"]
+                    info = species["top_level_region"]
+                    contents = html_file("plum", "Chromosome length")
+                    for element in info:
+                        if element["coord_system"] == "chromosome":
+                            if element["name"] == chromo:
+                                contents += f"""<p> The length of the chromosome is: {element["length"]} </p>"""
+
+            elif firts_argument == "/geneSeq":
+                error_code = 200
+                second_argument = arguments[1]
+                new_argument = second_argument.split("&")
+                if len(new_argument) == 2:
+                    parameter, json = second_argument.split("&")
+                    gene = parameter.split("=")[1]
+                    id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
+                    data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
+                    if json == "json=1":
+                        contents = data
+                    else:
+                        contents = html_file("aquamarine", "Sequence of a human gene")
+                        contents += f'<p> The sequence of gene {gene} is: </p>'
+                        contents += f'<textarea rows = "100" "cols = 500"> {data["seq"]} </textarea>'
+                elif len(new_argument) == 1:
+                    gene = second_argument.split("=")[1]
+                    id_gen = \
+                    client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
+                    data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
+                    contents = html_file("aquamarine", "Sequence of a human gene")
+                    contents += f'<p> The sequence of gene {gene} is: </p>'
+                    contents += f'<textarea rows = "100" "cols = 500"> {data["seq"]} </textarea>'
+
+            elif firts_argument == "/geneInfo":
+                error_code = 200
+                second_argument = arguments[1]
+                new_argument = second_argument.split("&")
+                if len(new_argument) == 2:
+                    parameter, json = second_argument.split("&")
+                    gene = parameter.split("=")[1]
+                    id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
+                    data = client_get_species(f"""/lookup/id/{id_gen}?content-type=application/json""")
+                    if json == "json=1":
+                        contents = data
+                    else:
+                        contents = html_file("palevioletred", "Information of a human gene")
+                        contents += f'<p> The gene is on chromosome {data["seq_region_name"]} </p>'
+                        contents += f'<p> The start of the gene is: {data["start"]} </p>'
+                        contents += f'<p> The end of the gene is: {data["end"]}</p>'
+                        contents += f'<p> The length of the gene is: {data["end"] - data["start"]}</p>'
+                        contents += f'<p> The identification of the gene is: {id_gen}</p>'
+                elif len(new_argument) == 1:
+                    gene = second_argument.split("=")[1]
+                    id_gen = \
+                    client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
+                    data = client_get_species(f"""/lookup/id/{id_gen}?content-type=application/json""")
+                    contents = html_file("palevioletred", "Information of a human gene")
+                    contents += f'<p> The gene is on chromosome {data["seq_region_name"]} </p>'
+                    contents += f'<p> The start of the gene is: {data["start"]} </p>'
+                    contents += f'<p> The end of the gene is: {data["end"]}</p>'
+                    contents += f'<p> The length of the gene is: {data["end"] - data["start"]}</p>'
+                    contents += f'<p> The identification of the gene is: {id_gen}</p>'
+
+            elif firts_argument == "/geneCalc":
+                error_code = 200
+                second_argument = arguments[1]
+                new_argument = second_argument.split("&")
+                if len(new_argument) == 2:
+                    parameter, json = second_argument.split("&")
+                    gene = parameter.split("=")[1]
+                    id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
+                    data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
+                    if json == "json=1":
+                        contents = data
+                    else:
+                        sequence = data["seq"]
+                        gene_seq = Seq(sequence)
+                        contents = html_file("thistle", "Length and percentage of basis of the gene")
+                        contents += f"The total lenght of the sequence is: {gene_seq.len()}"
+                        for element in list_bases:
+                            contents += f"<p>Base {element}: Percentage: ({gene_seq.count_base(element)[1]}%)</p>"
+                elif len(new_argument) == 1:
+                    gene = second_argument.split("=")[1]
+                    id_gen = \
+                    client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
+                    data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
+                    sequence = data["seq"]
+                    gene_seq = Seq(sequence)
+                    contents = html_file("thistle", "Length and percentage of basis of the gene")
+                    contents += f"The total lenght of the sequence is: {gene_seq.len()}"
+                    for element in list_bases:
+                        contents += f"<p>Base {element}: Percentage: ({gene_seq.count_base(element)[1]}%)</p>"
+
+            elif firts_argument == "/geneList":
+                error_code = 200
+                second_argument = arguments[1]
+                new_argument = second_argument.split("&")
+                if len(new_argument) == 4:
+                    first, second, third, json = second_argument.split("&")
+                    chromo = first.split("=")[1]
+                    start = second.split("=")[1]
+                    end = third.split("=")[1]
+                    data = client_get_species("overlap/region/human/" + chromo + ":" + start + "-" + end +
+                                              "?feature=gene;content-type=application/json")
+                    if json == "json=1":
+                        contents = data
+                    else:
+                        contents = html_file("moccasin", "List of human genes")
+                        for gene in data:
+                            contents += f"<p> · {gene['external_name']} </p>"
+                elif len(new_argument) == 3:
+                    first, second, third = second_argument.split("&")
+                    chromo = first.split("=")[1]
+                    start = second.split("=")[1]
+                    end = third.split("=")[1]
+                    data = client_get_species("overlap/region/human/" + chromo + ":" + start + "-" + end +
+                                              "?feature=gene;content-type=application/json")
+                    contents = html_file("moccasin", "List of human genes")
+                    for gene in data:
+                        contents += f"<p> · {gene['external_name']} </p>"
+
             else:
-                contents += f"""<p>Total number of species is: 267 </p>
-                                <p>The limit you have selected is:{third_argument}</p>
-                                <p>The names of the species are:</p>"""
-                error_code = 200
-                for element in species:
-                    contents += f"""<p> · {element["display_name"]} </p>"""
-        elif firts_argument == "/karyotype":
-            second_argument = arguments[1]
-            third_argument = second_argument.split("=")[1]
-            species = client_get_species("info/assembly/" + third_argument +
-                                         "?content-type=application/json")["karyotype"]
-            contents = html_file("pink", "Name of chromosomes:")
-            contents += f"""<p>The names of the chromosomes are: </p>"""
-            error_code = 200
-            for element in species:
-                contents += f"""<p> · {element} </p>"""
-        elif firts_argument == "/chromosomeLength":
-            second_argument = arguments[1]
-            third_argument, fourth_argument = second_argument.split("&")
-            specie = third_argument.split("=")[1]
-            chromosome = fourth_argument.split("=")[1]
-            species = client_get_species("info/assembly/" + specie +
-                                         "?content-type=application/json")["top_level_region"]
-            contents = html_file("plum", "Chromosome length")
-            for element in species:
-                if element["coord_system"] == "chromosome":
-                    if element["name"] == chromosome:
-                        contents += f"""<p> The length of the chromosome is: {element["length"]} </p>"""
-            error_code = 200
-        elif firts_argument == "/geneSeq":
-            second_argument = arguments[1]
-            third_argument = second_argument.split("=")[1]
-            id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{third_argument}?content-type=application/json""")[0]["id"]
-            data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
-            contents = html_file("aquamarine", "Sequence of a human gene")
-            contents += f'<p> The sequence of gene {third_argument} is: </p>'
-            contents += f'<textarea rows = "100" "cols = 500"> {data["seq"]} </textarea>'
-            error_code = 200
-        elif firts_argument == "/geneInfo":
-            second_argument = arguments[1]
-            third_argument = second_argument.split("=")[1]
-            id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{third_argument}?content-type=application/json""")[0]["id"]
-            data = client_get_species(f"""/lookup/id/{id_gen}?content-type=application/json""")
-            contents = html_file("palevioletred", "Information of a human gene")
-            contents += f'<p> The gene is on chromosome {data["seq_region_name"]} </p>'
-            contents += f'<p> The start of the gene is: {data["start"]} </p>'
-            contents += f'<p> The end of the gene is: {data["end"]}</p>'
-            contents += f'<p> The length of the gene is: {data["end"] - data["start"]}</p>'
-            contents += f'<p> The identification of the gene is: {id_gen}</p>'
-            error_code = 200
-        elif firts_argument == "/geneCalc":
-            second_argument = arguments[1]
-            third_argument = second_argument.split("=")[1]
-            id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{third_argument}?content-type=application/json""")[0]["id"]
-            data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
-            sequence = data["seq"]
-            gene_seq = Seq(sequence)
-            contents = html_file("thistle", "Length and percentage of basis of the gene")
-            contents += f"The total lenght of the sequence is: {gene_seq.len()}"
-            for element in list_bases:
-                contents += f"<p>Base {element}: Percentage: ({gene_seq.count_base(element)[1]}%)</p>"
-            error_code = 200
-        elif firts_argument == "/geneList":
-            second_argument = arguments[1]
-            first, second, third = second_argument.split("&")
-            chromo = first.split("=")[1]
-            start = second.split("=")[1]
-            end = third.split("=")[1]
-            data = client_get_species("overlap/region/human/" + chromo + ":" + start + "-" + end +
-                                      "?feature=gene;content-type=application/json")
-            contents = html_file("moccasin", "List of human genes")
-            for gene in data:
-                contents += f"<p> · {gene['external_name']} </p>"
-            error_code = 200
-        else:
+                contents = Path('Error.html').read_text()
+                error_code = 404
+
+
+        except (KeyError, ValueError, IndexError, TypeError):
             contents = Path('Error.html').read_text()
-            error_code = 404
+            error_code = 400
 
         self.send_response(error_code)
 
