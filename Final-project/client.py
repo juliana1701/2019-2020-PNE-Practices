@@ -32,7 +32,7 @@ def client(client_request):
 
 options = True
 while options:
-    print("Client for priving API rest")
+    print("Client for proving API rest")
     menu()
     option = int(input("Choose an option from menu"))
 
@@ -42,6 +42,37 @@ while options:
         client(req)
     elif option == 2:
         parameter = input("choose specie: ")
-        request = "/karyotype?specie=" + parameter
-        client(request)
+        req = "/karyotype?specie=" + parameter
+        client(req)
+    elif option == 3:
+        specie_parameter = input("Choose specie: ")
+        chromo_parameter = input("Choose chromosome: ")
+        req = f"/chromosomeLength?specie={specie_parameter}&chromo={chromo_parameter}"
+        client(req)
 
+    elif option == 4:
+        gene_parameter = input("Choose a human gene: ")
+        req = "/geneSeq?gene=" + gene_parameter
+        client(req)
+
+    elif option == 5:
+        gene_parameter = input("Choose a human gene: ")
+        req = "/geneInfo?gene=" + gene_parameter
+        client(req)
+
+    elif option == 6:
+        gene_parameter = input("Choose a human gene: ")
+        req = "/geneCalc?gene=" + gene_parameter
+        client(req)
+
+    elif option == 7:
+        chromo_parameter = input("Choose a human chromosome: ")
+        start_point = input("Choose the start point: ")
+        end_point = input("Choose the end point: ")
+        req = f"/geneList?chromo={chromo_parameter}&start={start_point}&end={end_point}"
+        client(req)
+
+    elif option == 8:
+        options = False
+    else:
+        print("Choose a valid option between 1-7 or 8 to exit the client")

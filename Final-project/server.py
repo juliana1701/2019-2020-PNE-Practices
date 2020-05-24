@@ -54,6 +54,56 @@ def karyotype_dic(list):
     karyotype_dict = json.dumps(contents)
     return karyotype_dict
 
+
+def dic_chromosomeLength(length):
+    contents = {
+        "The length of the selected chromosome is": length
+    }
+    client_dict = json.dumps(contents)
+    return client_dict
+
+
+def dict_geneSeq(seq):
+    contents = {
+        "The sequence of the selected gen is": seq
+    }
+    dic_geneSeq = json.dumps(contents)
+    return dic_geneSeq
+
+
+def dict_geneInfo(start, end, length, id, chromo): #no me sale :(
+    contents = {
+        "The start point is": start,
+        "The end point is": end,
+        "The length of the gene is": length,
+        "The ID of the gene is": id,
+        "The chromosome of this gene is": chromo
+    }
+    client_dict = json.dumps(contents)
+    return client_dict
+
+
+def dict_geneCalc(length, list):
+    contents = {
+        "Total length of the gene is": length,
+        "The percentage of each base in the sequence of this gene is"
+        "A": list[0],
+        "C": list[1],
+        "G": list[2],
+        "T": list[3]
+    }
+    client_dict = json.dumps(contents)
+    return client_dict
+
+
+def dict_geneList(list):
+    contents = {
+        "List of genes located in the introduced chromosome": list
+    }
+    client_dict = json.dumps(contents)
+    return client_dict
+
+
 PORT = 8080
 
 socketserver.TCPServer.allow_reuse_address = True
@@ -88,16 +138,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                         new_list = []
                         counter = 0
                         contents_1 = data["species"]
-                        if int(third_argument) < 267:
+                        if third_argument == "":
+                            for element in contents_1:
+                                new_list.append(element["display_name"])
+                                counter += 1
+                            contents = list_species(third_argument, new_list)
+                        if int(third_argument) <= 267:
                             for element in contents_1:
                                 if counter < int(third_argument):
                                     new_list.append(element["display_name"])
                                     counter += 1
-                            contents = list_species(third_argument, new_list)
-                        elif third_argument == "":
-                            for element in contents_1:
-                                new_list.append(element["display_name"])
-                                counter += 1
                             contents = list_species(third_argument, new_list)
                         self.send_response(200)
                     else:
@@ -170,18 +220,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                              "?content-type=application/json")
 
                     if json == "json=1":
-                        contents = species["top_level_region"]
+                        info = species["top_level_region"]
+                        contents = dic_chromosomeLength(0)
+                        for element in info:
+                            if element["name"] == chromo:
+                                length = element["length"]
+                                contents = dic_chromosomeLength(length)
                         self.send_response(200)
                     else:
-                        info = species["top_level_region"]
-                        contents = html_file("plum", "Chromosome length")
-                        contents += "<h1> CHROMOSOME LENGTH </h1>"
-                        for chromosome in info:
-                            if chromosome["coord_system"] == "chromosome":
-                                if chromosome["name"] == chromo:
-                                    c_lenght = chromosome['length']
-                                    contents += f"<p>The length of the chromosome {chromo} is: {c_lenght}</p>"
-                        self.send_response(200)
+                        contents = Path('Error.html').read_text()
+                        self.send_response(404)
                 elif len(new_argument) == 2:
                     specie, chromosome = second_argument.split("&")
                     specie_1 = specie.split("=")[1]
@@ -204,13 +252,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
                     data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
                     if json == "json=1":
-                        contents = data
+                        contents = dict_geneSeq(data["Seq"])
                         self.send_response(200)
                     else:
-                        contents = html_file("aquamarine", "Sequence of a human gene")
-                        contents += f'<p> The sequence of gene {gene} is: </p>'
-                        contents += f'<textarea rows = "100" "cols = 500"> {data["seq"]} </textarea>'
-                        self.send_response(200)
+                        contents = Path('Error.html').read_text()
+                        self.send_response(404)
                 elif len(new_argument) == 1:
                     gene = second_argument.split("=")[1]
                     id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
@@ -219,6 +265,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents += f'<p> The sequence of gene {gene} is: </p>'
                     contents += f'<textarea rows = "100" "cols = 500"> {data["seq"]} </textarea>'
                     self.send_response(200)
+
             elif firts_argument == "/geneInfo":
                 second_argument = arguments[1]
                 new_argument = second_argument.split("&")
@@ -228,16 +275,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
                     data = client_get_species(f"""/lookup/id/{id_gen}?content-type=application/json""")
                     if json == "json=1":
-                        contents = data
+                        length = data["end"] - data["start"]
+                        contents = dict_geneInfo(data["start"], data["end"], length, data["id"], data["seq_region_name"])
                         self.send_response(200)
                     else:
-                        contents = html_file("palevioletred", "Information of a human gene")
-                        contents += f'<p> The gene is on chromosome {data["seq_region_name"]} </p>'
-                        contents += f'<p> The start of the gene is: {data["start"]} </p>'
-                        contents += f'<p> The end of the gene is: {data["end"]}</p>'
-                        contents += f'<p> The length of the gene is: {data["end"] - data["start"]}</p>'
-                        contents += f'<p> The identification of the gene is: {id_gen}</p>'
-                        self.send_response(200)
+                        contents = Path('Error.html').read_text()
+                        self.send_response(404)
                 elif len(new_argument) == 1:
                     gene = second_argument.split("=")[1]
                     id_gen = \
@@ -258,17 +301,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     gene = parameter.split("=")[1]
                     id_gen = client_get_species(f"""/xrefs/symbol/homo_sapiens/{gene}?content-type=application/json""")[0]["id"]
                     data = client_get_species(f"""/sequence/id/{id_gen}?content-type=application/json""")
+                    sequence = Seq(data["seq"])
                     if json == "json=1":
-                        contents = data
+                        bases_list = []
+                        for base in list_bases:
+                            bases_list.append(sequence.seq_count_base(base)[1])
+                        contents = dict_geneCalc(sequence.len(), bases_list)
                         self.send_response(200)
                     else:
-                        sequence = data["seq"]
-                        gene_seq = Seq(sequence)
-                        contents = html_file("thistle", "Length and percentage of basis of the gene")
-                        contents += f"The total lenght of the sequence is: {gene_seq.len()}"
-                        for element in list_bases:
-                            contents += f"<p>Base {element}: Percentage: ({gene_seq.count_base(element)[1]}%)</p>"
-                            self.send_response(200)
+                        contents = Path('Error.html').read_text()
+                        self.send_response(404)
+
                 elif len(new_argument) == 1:
                     self.send_response(200)
                     gene = second_argument.split("=")[1]
@@ -293,13 +336,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     data = client_get_species("overlap/region/human/" + chromo + ":" + start + "-" + end +
                                               "?feature=gene;content-type=application/json")
                     if json == "json=1":
-                        contents = data
+                        new_list = []
+                        for gene in data:
+                            new_list.append(gene["external_name"])
+                        contents = dict_geneList(new_list)
                         self.send_response(200)
                     else:
-                        contents = html_file("moccasin", "List of human genes")
-                        for gene in data:
-                            contents += f"<p> · {gene['external_name']} </p>"
-                        self.send_response(200)
+                        contents = Path('Error.html').read_text()
+                        self.send_response(404)
                 elif len(new_argument) == 3:
                     self.send_response(200)
                     first, second, third = second_argument.split("&")
@@ -312,32 +356,24 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     for gene in data:
                         contents += f"<p> · {gene['external_name']} </p>"
 
-            else:
-                contents = Path('Error.html').read_text()
-                self.send_response(404)
-
-
         except (KeyError, ValueError, IndexError, TypeError):
             contents = Path('Error.html').read_text()
-            error_code = 400
+            self.send_response(404)
 
 
-        endpoints = ["","/", "/listSpecies", "/karyotype", "/chromosomeLength",
+        endpoints = ["/", "/listSpecies", "/karyotype", "/chromosomeLength",
                     "/geneSeq", "/geneInfo", "/geneCalc", "/geneList"]
 
-        #if firts_argument in endpoints:
-            #if json == "json=1":
-                #type = "application/json"
-           # else:
-                #type = "text/html"
+        if firts_argument in endpoints:
+            if "json=1" in path:
+                type = "application/json"
+            else:
+                type = "text/html"
 
-        self.send_header('Content-Type', "text/html")
+        self.send_header('Content-Type', type)
         self.send_header('Content-Length', len(str.encode(contents)))
-
         self.end_headers()
-
         self.wfile.write(str.encode(contents))
-
         return
 
 
