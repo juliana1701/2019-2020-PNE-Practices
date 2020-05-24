@@ -1,0 +1,667 @@
+Client proving API REST.
+1 - /listSpecies
+2 - /karyotype
+3 - /chromosomeLength
+4 - /geneSeq
+5 - /geneInfo
+6 - /geneCalc
+7 - /geneList
+8 - Exit
+
+Choose an option from menu:
+Enter a number for json:
+
+
+---> Option 1 (listSpecies endpoint)
+TEST 1*
+Input: /listSpecies?limit=7&json=1
+Output: CONTENT: {'Total number of species': 267, 'Limit selected': '7', 'List of species': ['Mainland tiger snake', 'Chilean tinamou', 'Red fox', 'Sperm whale', 'Great spotted kiwi', 'Pinecone soldierfish', 'Greater bamboo lemur']}
+
+---> Option 2 (karyotype endpoint)
+TEST 2*:
+Input: /karyotype?specie=mouse&json=1
+Output: CONTENT: {'The names of the chromosomes are': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', 'X', 'Y', 'MT']}
+
+---> Option 3 (chromosomeLength endpoint)
+TEST 3*:
+Input: /chromosomeLength?specie=mouse&chromo=8&json=1
+Output: CONTENT: {'The length of the selected chromosome is': 129401213}
+
+---> Option 4 (geneSeq endpoint)
+TEST 4*
+Input: /geneSeq?gene=FRAT1&json=1
+Output: CONTENT: {'The sequence of the selected gen is': 'CGGCTCCCGCGGCTGCAGGCGCGCGGCTAGAGTGCCTGGCGGGCTCCGGCTTCCGCGTCCGCCCCGGCCCCGGTCCAGACTTAGTCTTCAGCTCCGCGCCCGCTCCGCCGCGGCCCACCGCGCCCGCCGGCAGCCGAGCCCCCAGCGACGCCCGCACAGCTCCGGGTGCCCAGACAGGGGGCCATGCCGTGCCGGAGGGAGGAGGAAGAGGAAGCCGGCGAGGAGGCGGAGGGGGAGGAAGAGGAGGAGGACAGCTTCCTCCTACTGCAGCAGTCAGTGGCGCTGGGCAGCTCGGGCGAGGTGGACCGGCTGGTGGCCCAGATCGGCGAGACGCTGCAGCTGGACGCGGCGCAGCACAGCCCGGCCTCGCCGTGCGGGCCCCCGGGGGCGCCGCTGCGGGCCCCGGGGCCCCTGGCTGCGGCGGTGCCGGCGGACAAGGCCAGGTCCCCGGCGGTGCCGCTGCTGCTGCCGCCCGCGTTGGCGGAGACTGTGGGCCCGGCGCCCCCTGGGGTCCTGCGCTGCGCCCTGGGGGACCGCGGCCGCGTGCGGGGCCGCGCTGCGCCCTACTGCGTGGCCGAGCTCGCCACAGGCCCCAGCGCGCTGTCCCCACTGCCCCCTCAGGCCGACCTTGATGGGCCTCCGGGAGCTGGCAAGCAGGGCATCCCGCAGCCGCTGTCGGGTCCGTGCCGGCGAGGATGGCTCCGGGGCGCCGCCGCCTCCCGCCGCCTGCAGCAGCGACGCGGGTCCCAACCAGAAACCCGCACAGGCGACGACGACCCGCACCGGCTTCTGCAGCAGCTAGTGCTCTCTGGAAACCTCATCAAGGAGGCCGTGCGAAGGCTTCATTCGCGACGGCTGCAGTTACGTGCAAAGCTTCCCCAACGCCCGCTCCTGGGACCTCTGTCGGCCCCGGTGCATGAACCCCCTTCGCCTCGCAGCCCTCGCGCGGCCTGCAGTGACCCTGGCGCCTCCGGGAGGGCGCAGCTCAGAACTGGCGACGGCGTTCTTGTGCCTGGCAGCTAACACGCCCGGGGTGGCCACAGCGCCAGCCTCAGACTGGAGGGCAAGGGGTTCCCTTGAGGGCTGCAGTTCTACTCAGGCTGGTGGAGAACTCTGGCTTTTGGAAGCGAGAGTAAAAAGCTAATGACGAGGAACCGAAAAATCGCGAGTGTTTCGCGGGTAACTGGGGTTGAGGGCCAAAATATTTGGAATGAAGGACTTTGGCCCTATTTAAGGCAGATTTTACAGAGCGCACCTCAAACGTACAAGTCAGTAGGACTCCTTATTTGGCGTGACCCGACCTGGCCGCGGAGCCTGCATTTCCTCGCAGCCTCTCAGTGCCCTCCAGCCCCGCGACCATGTGGCCACAATCCACGCTTCTCCGGATCGCGGTGCGCCGGAACCACGGAGGATGATGCCAGTTACTTGCTTTACCTTTTCAGGGCTGGCTCCTGATCCACTTTGGGGGAGGAGAACATGAGTAGATAATTTCAGGGTGCAGCCCAATCTGCCAGACTTAAAAAAACCATCTTGTGTCTTTGGAGGTGCTGCTTAATACCAAACATGCGGTGCCATGAAGGGACCCTTTGGGGGTTGAATAGGAGTTAACCCCTGCGCTCTCTTTGCAACTGTCTCTCTTCTCAGAGTGGTGGGGGAAGGCTGTACGACACGGGTGGGGAAAGGAGGTGGGGGCGGGGAGTATTGAATGGTGGTGGAAGGGTAGAGAGGCGCGGAGTGAACCCCACGCCCTGTCTAAAGTGTATTTTCAGAGCCGGCCCGCCTCTCCTCGGTTCAAGGTCACTGTTTCCTGGGCACGCACTGGGTTGCGGGACAGAGTAGCCAGGTTCTGCCGGTGCTCGGAGAAGAGCGCAGTGTTTTGCAAGTGCTGGAGTCTCCTGAGGACACGCGCGTCGCCGCCACCGCGGGTGTGGGAAAGCGCGGACGTGCTGGGCGGCTGTGCTTCGGTAGGCGACCACCGCCCCTGGCCGCGCTCCGGGCTTTCACGGAAACTCCCGAGACCGGGCCCTGGGTTCCTCCTCTCCTACTCGGCTCTGCAGTCCTACTCAAGCGGGTGGCTCTGGGATCCTGGGGGCCTGGGTTGGGGGCTAGGGAGACGCCATGTGATGGACACTCCAGGGACACACAGCCTAGCACAGCAGCTTATAATGGGCTCTCCGGGGCCATTTGCAATAACAGCTGCAATTCCCTGGATAGACGAGTTGATTTCCTCCCTCTGCCCCTCCCCCAGCCATGCCAGCTGGCCTTTGTAAGTGCAGGAAACCGAGTAGAAAATGTGACCCTCCAAATGGAGAAGCTGCAGGCTTTGCCATTGTGAACCATGGTGAAGTGCTTGGAACATACTGTTCACTCACTCTAAAGGCGCTGAGACTGTGCTGTTGTTCTCGTTTTTATAGTCAATGGCTTGTTCATCATCCAGATGTGGCTACTGACATATCTACACTTCGCACCGGAGTGTCTGGAATTGTGGCTATCCTGATTATAGGATTTTAACTTAACTGAAATGCCTGCTTTGAATAAATGTGTTGGGTTTTTTGTTTGGTTTTATTTTATACTTGCCATCAGTGAAAAAGATGTACAGAACACATTTCTCTGATCTCCATAAACATGAAAACACTTGAAATCTC'}
+
+--->Option 5 (geneInfo endpoint)
+TEST 5*
+Input: /geneInfo?gene=FRAT1&json=1
+Output: CONTENT: {'The start point is': 97319271, 'The end point is': 97321915, 'The length of the gene is': 2644, 'The ID of the gene is': 'ENSG00000165879', 'The chromosome of this gene is': '10'}
+
+--->Option 6 (geneCalc endpoint)
+TEST 6*
+Input: /geneCalc?gene=FRAT1&json=1
+Output: CONTENT: {'Total length of the gene is': 2645, 'The percentage of each base in the sequence of this gene is 'A': 18.0, 'C': 30.2, 'G': 32.1, 'T': 19.7}
+
+--->Option 7 (geneList endpoint)
+TEST 7*
+Input: /geneList?chromo=8&start=1&end=234567&json=1
+Output: CONTENT: {'List of genes located in the introduced chromosome': ['AC144568.1', 'AC144568.2', 'AC131281.2', 'WBP1LP3', 'OR4F21', 'SEPTIN14P8', 'AC131281.1', 'RPL23AP53', 'ZNF596', 'AC004908.2', 'AC004908.1']}
+
+---> Option 1 (listSpecies endpoint)
+TEST 8*
+Input: /listSpecies?limit=mouse&json=3
+Output: CONTENT: {'Error': 'Resource not available'}
+
+---> Option 2 (karyotype endpoint)
+TEST 9*
+Input: /karyotype?specie=mouse&json=6
+Output: CONTENT: {'Error': 'Resource not available'}
+
+---> Option 3 (chromosomeLength endpoint)
+TEST 10*
+Input: /chromosomeLength?specie=mouse&chromo=8&json=4
+Output: CONTENT: {'Error': 'Resource not available'}
+
+---> Option 4 (geneSeq endpoint)
+TEST 11*
+Input: /geneSeq?gene=FRAT1&json=9
+Output: CONTENT: {'Error': 'Resource not available'}
+
+--->Option 5 (geneInfo endpoint)
+TEST 12*
+Input: /geneInfo?gene=FRAT1&json=0
+Output: CONTENT: {'Error': 'Resource not available'}
+
+--->Option 6 (geneCalc endpoint)
+TEST 13*
+Input: /geneCalc?gene=FRAT1&json=8
+Output: CONTENT: {'Error': 'Resource not available'}
+
+--->Option 7 (geneList endpoint)
+TEST 14*
+Input: /geneList?chromo=8&start=1&end=2345789&json=5
+Output: CONTENT: {'Error': 'Resource not available'}
+
+---> Option 1 (listSpecies endpoint)
+TEST 15*
+Input: /listSpecies?limit=&json=1
+Output: CONTENT: {'Total number of species': 267, 'Limit selected': '', 'List of species': ['Mainland tiger snake', 'Chilean tinamou', 'Red fox', 'Sperm whale', 'Great spotted kiwi', 'Pinecone soldierfish', 'Greater bamboo lemur', 'Kakapo', 'Lamprey', 'Gouldian finch', 'Electric eel', 'Okarito brown kiwi', 'Large yellow croaker', 'Channel bull blenny', 'Mouse NZO/HlLtJ', 'Zebrafish', 'Common carp huanghe', 'Mouse A/J', 'Pig - Wuzhishan', 'Horned golden-line barbel', 'Tree Shrew', 'Marmoset', 'Spotted gar', 'Tiger', 'Goat', 'Central bearded dragon', 'Naked mole-rat female', 'American black bear', 'Tetraodon', 'Meerkat', 'Steppe mouse', 'Lyretail cichlid', 'Mangrove rivulus', 'Gorilla', 'Sheep', 'Bicolor damselfish', 'Coelacanth', 'Midas cichlid', "Ma's night monkey", 'Pachon cavefish', 'Common wombat', 'Blue-ringed sea krait', 'Gilthead seabream', 'Indian peafowl', 'Pig-tailed macaque', 'American beaver', 'Pig - Jinhua', 'Duck', 'Shrew mouse', 'Western mosquitofish', "Agassiz's desert tortoise", 'Helmeted guineafowl', 'Amazon molly', 'Chinese hamster CHOK1GS', 'Orangutan', 'Olive baboon', 'Orbiculate cardinalfish', 'Zebra mbuna', 'Elephant', 'American mink', 'Guinea Pig', 'Platypus', 'Capuchin', 'Golden-collared manakin', 'Three-toed box turtle', 'Prairie vole', 'Tropical clawed frog', 'Common carp', 'Blue tilapia', 'Flycatcher', 'Pig - Bamei', 'Spoon-billed sandpiper', 'African ostrich', 'Periophthalmus magnuspinnatus', 'Chinese softshell turtle', 'Asiatic black bear', 'Reedfish', 'Tarsier', 'Clown anemonefish', 'Huchen', 'Horse', 'Pig - Landrace', 'Chinese hamster PICR', 'Mouse', 'Mexican tetra', 'Lesser hedgehog tenrec', 'Jewelled blenny', 'Tongue sole', 'Mouse 129S1/SvImJ', 'Leopard', 'Live sharksucker', 'Great Tit', 'Northern pike', 'Yellowtail amberjack', 'Ruff', 'Alpaca', 'Mouse Lemur', 'Ugandan red Colobus', 'Human', 'Mouse BALB/cJ', 'Pig - Rongchang', 'Drill', "Burton's mouthbrooder", 'Lion', 'Burrowing owl', 'Hyrax', 'Indian glassy fish', 'Gelada', 'Mouse FVB/NJ', 'Budgerigar', 'Japanese medaka HNI', 'Chacoan peccary', 'Pink-footed goose', 'Tiger tail seahorse', 'Mouse CBA/J', 'Turbot', 'Opossum', 'Greater horseshoe bat', 'Paramormyrops kingsleyae', 'Blind barbel', 'Rufous-capped babbler', 'Komodo dragon', 'Saccharomyces cerevisiae', 'Monterrey platyfish', 'Beluga whale', 'Painted turtle', 'Japanese medaka HSOK', 'Mouse NOD/ShiLtJ', 'Angola colobus', 'Golden Hamster', 'Spiny chromis', 'Naked mole-rat male', 'Makobe Island cichlid', 'Dog - Basenji', 'Fugu', 'Golden pheasant', 'Crab-eating macaque', 'Koala', 'Mouse DBA/2J', 'Nile tilapia', 'Ring-necked pheasant', 'Kangaroo rat', 'Megabat', 'Caenorhabditis elegans', 'Alpine marmot', 'Mallard', 'Mouse PWK/PhJ', 'Hybrid - Bos Indicus', 'Mouse C57BL/6NJ', 'Round goby', 'Siamese fighting fish', 'Polar bear', 'Brazilian guinea pig', 'Sooty mangabey', 'Pig - Tibetan', 'Lesser Egyptian jerboa', 'Javanese ricefish', 'Common wall lizard', 'Rabbit', 'Chimpanzee', 'Siberian musk deer', 'Dingo', 'Bolivian squirrel monkey', 'Long-tailed chinchilla', 'Drosophila melanogaster', 'Eastern brown snake', 'Pig - Largewhite', 'Australian saltwater crocodile', 'Anole lizard', 'Shortfin molly', 'Wallaby', 'Atlantic salmon', 'Domestic yak', 'Chinese medaka', 'Rat', 'Sheepshead minnow', 'Bushbaby', 'Eastern happy', 'Blue tit', 'Algerian mouse', 'Pig - Meishan', 'Atlantic herring', 'Japanese quail', 'Dog - Great Dane', 'Little spotted kiwi', 'Canada lynx', 'Swamp eel', 'Platyfish', 'Microbat', 'West African mud turtle', 'Armadillo', 'Greater amberjack', 'Eurasian sparrowhawk', 'Goodes thornscrub tortoise', 'American bison', 'Brown trout', 'Argentine black and white tegu', 'Mouse C3H/HeJ', 'Damara mole rat', 'Cow', 'Macaque', 'Golden-line barbel', 'Japanese medaka HdrR', 'Black snub-nosed monkey', 'Blunt-snouted clingfish', 'Elephant shark', 'Northern American deer mouse', 'Pig USMARC', 'Barramundi perch', 'Common carp german mirror', 'Hedgehog', 'Squirrel', 'Degu', 'Yellow-billed parrot', 'Medium ground-finch', 'Golden eagle', 'Climbing perch', 'Turkey', 'Abingdon island giant tortoise', 'Mouse WSB/EiJ', 'Tasmanian devil', 'Common canary', 'Mummichog', 'Panda', 'Gibbon', 'Zebra finch', 'Goldfish', 'White-throated sparrow', 'Dark-eyed junco', 'Guppy', 'Zig-zag eel', 'Chinese hamster CriGri', 'Upper Galilee mountains blind mole rat', 'Pig', 'Mouse AKR/J', 'Bonobo', 'Dog', 'Ocean sunfish', 'Small tree finch', 'C.savignyi', 'Rainbow trout', 'Mongolian gerbil', 'Chicken', 'Blue-crowned manakin', 'Daurian ground squirrel', 'Wild yak', "Coquerel's sifaka", 'Vervet-AGM', 'Stickleback', 'Hagfish', 'Ballan wrasse', 'Mouse LP/J', 'Bengalese finch', 'Mouse CAST/EiJ', 'Common snapping turtle', 'Sailfin molly', 'Pig - Hampshire', 'Tuatara', 'Shrew', 'Ryukyu mouse', 'Pig - Pietrain', 'European seabass', 'Swan goose', 'Denticle herring', 'Dolphin', 'Emu', 'Arctic ground squirrel', 'Cod', 'Ferret', 'Common carp hebao red', 'Orange clownfish', 'Silver-eye', 'Golden snub-nosed monkey', 'C.intestinalis', 'Pig - Berkshire', 'Pika', 'Sloth', 'Indian medaka', 'Red-bellied piranha', 'Arabian camel', 'Donkey', 'Asian bonytongue', 'Hybrid - Bos Taurus', 'Chinook salmon', 'Channel catfish', 'Cat']}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TESTS WITHOUT THE JSON CLIENT
+
+---> No endpoint
+
+*TEST 16:
+
+*Input
+
+http://127.0.0.1:8080/
+
+*Output
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>main-page</title>
+  </head>
+  <h1>Browsing Human and Vertebrates genome</h1>
+  <h2>BASIC Level Services</h2>
+  <body style="background-color: lightgreen">
+  <form action="listSpecies" method="get">
+    "
+        1)List of species in the genome database
+        "
+        <br>
+        "
+        Limit:"
+         <input type="text" name="limit">
+          <br>
+      <input type="submit" value="Send">
+       <br>
+        <br>
+        </form>
+        <form action="karyotype" method="get">
+        "
+        2) Information about the Karyotype
+        "
+       <br>
+       "
+        Select the species:"
+         <input type="text" name="specie">
+         <br>
+      <input type="submit" value="Send">
+            <br>
+            <br>
+    </form>
+    <form action="chromosomeLength" method="get">
+    "
+        3) Chromosome Length
+        "
+        <br>
+        "
+       Select the species:"
+        <input type="text" name="specie">
+            <br>
+            "
+        Select a chromosome:"
+         <input type="text" name="chromo">
+        <br>
+      <input type="submit" value="Send">
+        <br>
+    </form>
+    </body>
+    </html>
+
+
+---> Option 1 (listSpecies endpoint)
+
+* TEST 17:
+
+* Input:
+
+http://127.0.0.1:8080/listSpecies?limit=10
+
+* output:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>List of species</title>
+</head>
+<body style="background-color: lightblue">
+<h1>List of species</h1>
+<p>Total number of species is: 267 </p>
+<p>The limit you have selected is: 6 </p>
+<p>The names of the species are:</p>
+<p> · Domestic ferret</p>
+<p> · pig</p>
+<p> · Periophtalamus magnuspinnatus</p>
+<p> · horned golden-line barbel</p>
+<p> · western mosquitofish</p>
+<p> · domestic cat</p>
+</body>
+</html>
+
+TEST 18*
+Input: http://127.0.0.1:8080/listSpecies?limit=
+
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>List of species</title>
+</head>
+<body style="background-color: lightblue">
+<h1>List of species</h1>
+<p>Total number of species is: 267 </p>
+<p>The limit you have selected is: 6 </p>
+<p>The names of the species are:</p>
+<p> · Ferret</p>
+<p> · Pig</p>
+<p> · Periophthalmus magnuspinnatus</p>
+<p> · Horned golden-line barbel</p>
+<p> · Western mosquitofish</p>
+<p> · Cat</p>
+<p> · Damara mole rat</p>
+<p> · Sheep</p>
+<p> · Greater amberjack</p>
+<p> · Goat</p>
+<p> · Shortfin molly</p>
+<p> · Drill</p>
+<p> · Upper Galilee mountains blind mole rat</p>
+<p> · Asian bonytongue</p>
+<p> · Siamese fighting fish</p>
+<p> · Red fox</p>
+<p> · Mallard</p>
+<p> · Gilthead seabream</p>
+<p> · Chicken</p>
+<p> · Olive baboon</p>
+<p> · Common carp german mirror</p>
+<p> · Sperm whale</p>
+<p> · Megabat</p>
+<p> · Chinese hamster CriGri</p>
+<p> · Reedfish</p>
+<p> · Stickleback</p>
+<p> · C.savignyi</p>
+<p> · Dog - Basenji</p>
+<p> · Platyfish</p>
+<p> · Blue tilapia</p>
+<p> · Donkey</p>
+<p> · Turkey</p>
+<p> · Mouse 129S1/SvImJ</p>
+<p> · Mouse FVB/NJ</p>
+<p> · Small tree finch</p>
+<p> · Zebra finch</p>
+<p> · Ryukyu mouse</p>
+<p> · Wallaby</p>
+<p> · Budgerigar</p>
+<p> · Pig - Hampshire</p>
+<p> · Tasmanian devil</p>
+<p> · Wild yak</p>
+<p> · Medium ground-finch</p>
+<p> · Burton's mouthbrooder</p>
+<p> · Bolivian squirrel monkey</p>
+<p> · Mouse C57BL/6NJ</p>
+<p> · Live sharksucker</p>
+<p> · Dolphin</p>
+<p> · Pig - Berkshire</p>
+<p> · Anole lizard</p>
+<p> · Guppy</p>
+<p> · Lesser hedgehog tenrec</p>
+<p> · Pig - Bamei</p>
+<p> · Indian glassy fish</p>
+<p> · Shrew</p>
+<p> · Yellow-billed parrot</p>
+<p> · Pig - Pietrain</p>
+<p> · Black snub-nosed monkey</p>
+<p> · Pig - Jinhua</p>
+<p> · Squirrel</p>
+<p> · Pig - Tibetan</p>
+<p> · Clown anemonefish</p>
+<p> · American bison</p>
+<p> · Pink-footed goose</p>
+<p> · Sailfin molly</p>
+<p> · Dingo</p>
+<p> · Ma's night monkey</p>
+<p> · Common canary</p>
+<p> · Zig-zag eel</p>
+<p> · Hyrax</p>
+<p> · Mouse AKR/J</p>
+<p> · Spiny chromis</p>
+<p> · Makobe Island cichlid</p>
+<p> · Pig USMARC</p>
+<p> · Common carp hebao red</p>
+<p> · Vervet-AGM</p>
+<p> · Chimpanzee</p>
+<p> · Beluga whale</p>
+<p> · Asiatic black bear</p>
+<p> · Midas cichlid</p>
+<p> · Alpaca</p>
+<p> · Pig - Landrace</p>
+<p> · Sloth</p>
+<p> · Nile tilapia</p>
+<p> · Drosophila melanogaster</p>
+<p> · Rabbit</p>
+<p> · Kakapo</p>
+<p> · Saccharomyces cerevisiae</p>
+<p> · Caenorhabditis elegans</p>
+<p> · Swan goose</p>
+<p> · Dog</p>
+<p> · Yellowtail amberjack</p>
+<p> · Chinook salmon</p>
+<p> · Polar bear</p>
+<p> · White-throated sparrow</p>
+<p> · Tarsier</p>
+<p> · Brazilian guinea pig</p>
+<p> · Rainbow trout</p>
+<p> · Rufous-capped babbler</p>
+<p> · Leopard</p>
+<p> · Golden Hamster</p>
+<p> · Barramundi perch</p>
+<p> · Ugandan red Colobus</p>
+<p> · Daurian ground squirrel</p>
+<p> · Common wombat</p>
+<p> · Tropical clawed frog</p>
+<p> · Channel catfish</p>
+<p> · Ocean sunfish</p>
+<p> · Sheepshead minnowv</p>
+<p> · Blind barbel</p>
+<p> · Arctic ground squirrel</p>
+<p> · Chinese hamster PICR</p>
+<p> · Ruff</p>
+<p> · Japanese medaka HNI</p>
+<p> · Lion</p>
+<p> · Hagfish</p>
+<p>· Opossum</p>
+<p> · Blunt-snouted clingfish</p>
+<p> · Atlantic salmon</p>
+<p> · Mouse NOD/ShiLtJ</p>
+<p> · Fugu</p>
+<p> · Chinese hamster CHOK1GS</p>
+<p> · Great Tit</p>
+<p> · Mouse A/J</p>
+<p> · Northern American deer </p>
+<p> · Human</p>
+<p> · Japanese quail</p>
+<p> · Kangaroo rat</p>
+<p> · Angola colobus</p>
+<p> · Blue tit</p>
+<p> · Indian medaka</p>
+<p> · Common snapping turtle</p>
+<p> · Little spotted kiwi</p>
+<p> · Sooty mangabey</p>
+<p> · Golden snub-nosed monkey</p>
+<p> · Chinese medaka</p>
+<p> · American beaver</p>
+<p> · Mouse PWK/PhJ</p>
+<p> · Komodo dragon</p>
+<p> · Mangrove rivulus</p>
+<p> · Large yellow croaker</p>
+<p> · Mouse BALB/cJ</p>
+<p> · Bonobo</p>
+<p> · Mexican tetra</p>
+<p> · Steppe mouse</p></p>
+<p> · Elephant</p>
+<p> · Central bearded dragon</p>
+<p> · Golden-line barbel</p>
+<p> · Tiger tail seahorse</p>
+<p> · Lyretail cichlid</p>
+<p> · Ring-necked pheasant</p>
+<p> · American mink</p>
+<p> · Three-toed box turtle</p>
+<p> · Pig - Largewhite</p>
+<p> · Hybrid - Bos Taurus</p>
+<p> · Electric eel</p>
+<p> · Argentine black and white tegu</p>
+<p> · Turbot</p>
+<p> · Tree Shrew</p>
+<p> · Goldfish</p>
+<p> · Monterrey platyfish</p>
+<p> · Eurasian sparrowhawk</p>
+<p> · Naked mole-rat male</p>
+<p> · Ballan wrasse</p>
+<p> · Gouldian finch</p>
+<p> · Mouse DBA/2J</p>
+<p> · Golden-collared manakin</p>
+<p> · Orbiculate cardinalfish</p>
+<p> · Mouse NZO/HlLtJ</p>
+<p> · Microbat</p>
+<p> · Goodes thornscrub tortoise</p>
+<p> · Mongolian gerbil</p>
+<p> · Dark-eyed junco</p>
+<p> · Japanese medaka HdrR</p>
+<p> · Blue-ringed sea krait</p>
+<p> · Climbing perch</p>
+<p> · Tongue sole</p>
+<p> · Naked mole-rat female</p>
+<p> · Pachon cavefish</p>
+<p> · Emu</p>
+<p> · Eastern happy</p>
+<p> · Mouse C3H/HeJ</p>
+<p> · Eastern brown snake</p>
+<p> · Spotted gar</p>
+<p> · Javanese ricefish</p>
+<p> · Degu</p>
+<p> · Shrew mouse</p>
+<p> · Dog - Great Dane</p>
+<p> · Round goby</p>
+<p> · Golden pheasant</p>
+<p> · Crab-eating macaque</p>
+<p> · Duck</p>
+<p> · Orange clownfish</p>
+<p> · Tuatara</p>
+<p> · Pinecone soldierfish</p>
+<p> · Panda</p>
+<p> · Common carp huanghe</p>
+<p> · Coelacanth</p>
+<p> · Mouse CBA/J</p>
+<p> · Chacoan peccary</p>
+<p> · Platypus</p>
+<p> · Pig - Wuzhishan</p>
+<p> · Horse</p>
+<p> · Huchen</p>
+<p> · Long-tailed chinchilla</p>
+<p> · C.intestinalis</p>
+<p> · Mouse WSB/EiJ</p>
+<p> · Elephant shark</p>
+<p> · Jewelled blenny</p>
+<p> · Helmeted guineafowl</p>
+<p> · Australian saltwater crocodile</p>
+<p> · Mouse Lemur</p>
+<p> · Pig - Rongchang</p>
+<p> · Koala</p>
+<p> · Red-bellied piranha</p>
+<p> · Common carp</p>
+<p> · Mainland tiger snake</p>
+<p> · Abingdon island giant tortoise</p>
+<p> · Bengalese finch</p>
+<p> · Gorilla</p>
+<p> · Greater bamboo lemur</p>
+<p> · Cow</p>
+<p> · Amazon molly</p>
+<p> · Zebrafish</p>
+<p> · Okarito brown kiwi</p>
+<p> · Meerkat</p>
+<p> · Cod</p>
+<p> · Prairie vole</p>
+<p> · Domestic yak</p>
+<p> · Agassiz's desert tortoise</p>
+<p> · Alpine marmot</p>
+<p> · Arabian camel</p>
+<p> · Gibbon</p>
+<p> · Canada lynx</p>
+<p> · Coquerel's sifaka</p>
+<p> · Paramormyrops kingsleyae</p>
+<p> · Northern pike</p>
+<p> · Guinea Pig</p>
+<p> · Mouse CAST/EiJ</p>
+<p> · Blue-crowned manakin</p>
+<p> · Common wall lizard</p>
+<p> · Golden eagle</p>
+<p> · Pika</p>
+<p> · Great spotted kiwi</p>
+<p> · Lesser Egyptian jerboa</p>
+<p> · Armadillo</p>
+<p> · Rat</p>
+<p> · Atlantic herring</p>
+<p> · Mummichog</p>
+<p> · Greater horseshoe bat</p>
+<p> · Japanese medaka HSOK</p>
+<p> · Indian peafowl</p>
+<p> · Lamprey</p>
+<p> · Burrowing owl</p>
+<p> · Brown trout</p>
+<p> · Swamp eel</p>
+<p> · Pig - Meishan</p>
+<p> · Capuchin</p>
+<p> · Flycatcher</p>
+<p> · Hybrid - Bos Indicus</p>
+<p> · Spoon-billed sandpiper</p>
+<p> · Gelada</p>
+<p> · Tiger</p>
+<p> · Chilean tinamou</p>
+<p> · Channel bull blenny</p>
+<p> · Mouse LP/J</p>
+<p> · Tetraodon</p>
+<p> · American black bear</p>
+<p> · European seabass</p>
+<p> · West African mud turtle</p>
+<p> · Silver-eye</p>
+<p> · Hedgehogv</p>
+<p> · Macaque</p>
+<p> · Siberian musk deer</p>
+<p> · Denticle herring</p>
+<p> · African ostrich</p>
+<p> · Chinese softshell turtle</p>
+<p> · Painted turtle</p>
+<p> · Bushbaby</p>
+<p> · Pig-tailed macaque</p>
+<p> · Marmoset</p>
+<p> · Algerian mouse</p>
+<p> · Mouse</p>
+<p> · Bicolor damselfish</p>
+<p> · Zebra mbuna</p>
+
+</body>
+</html>
+
+
+
+---> Option 2 (karyotype endpoint)
+
+TEST 19*
+
+Input: http://127.0.0.1:8080/karyotype?specie=mouse
+
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Name of chromosomes:</title>
+</head>
+<body style="background-color: pink">
+<h1> Name of chromosomes </h1>
+<p>The name of the chromosomes are: </p>
+<p> · 1 </p>
+<p> · 2 </p>
+<p> · 3 </p>
+<p> · 4 </p>
+<p> · 5 </p>
+<p> · 6 </p>
+<p> · 7 </p>
+<p> · 8 </p>
+<p> · 9 </p>
+<p> · 10 </p>
+<p> · 11 </p>
+<p> · 12 </p>
+<p> · 13 </p>
+<p> · 14 </p>
+<p> · 15 </p>
+<p> · 16 </p>
+<p> · 17 </p>
+<p> · 18 </p>
+<p> · 19 </p>
+<p> · X </p>
+<p> · Y </p>
+<p> · MT </p>
+</body>
+</html>
+
+---> Option 3 (chromosomeLength endpoint)
+
+TEST 20
+
+Input: http://127.0.0.1:8080/chromosomeLength?specie=mouse&chromo=18
+
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chromosome length</title>
+</head>
+<body style="background-color: plum">
+<h1>Chromosome length</h1>
+<p> The length of the chromosome is: 90702639</p>
+</body>
+</html>
+
+TEST 21*
+
+Input: http://127.0.0.1:8080/chromosomeLength?specie=human&chromo=X
+
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chromosome length</title>
+</head>
+<body style="background-color: plum">
+<h1>Chromosome length</h1>
+<p> The length of the chromosome is: 156040895</p>
+</body>
+</html>
+
+---> Option 4 (geneSeq endpoint)
+TEST 22*
+Input: http://127.0.0.1:8080/geneSeq?gene=FRAT1
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sequence of a human gene</title>
+  </head>
+  <body style="background color: aquamarine">
+  <h1>Sequence of a human gene</h1>
+  <p> The sequence of gene FRAT1 is: </p>
+  <textarea rows="100" "cols"="500">
+  "CGGCTCCCGCGGCTGCAGGCGCGCGGCTAGAGTGCCTGGCGGGCTCCGGCTTCCGCGTCCGCCCCGGCCCCGGTCCAGACTTAGTCTTCAGCTCCGCGCCCGCTCCGCCGCGGCCCACCGCGCCCGCCGGCAGCCGAGCCCCCAGCGACGCCCGCACAGCTCCGGGTGCCCAGACAGGGGGCCATGCCGTGCCGGAGGGAGGAGGAAGAGGAAGCCGGCGAGGAGGCGGAGGGGGAGGAAGAGGAGGAGGACAGCTTCCTCCTACTGCAGCAGTCAGTGGCGCTGGGCAGCTCGGGCGAGGTGGACCGGCTGGTGGCCCAGATCGGCGAGACGCTGCAGCTGGACGCGGCGCAGCACAGCCCGGCCTCGCCGTGCGGGCCCCCGGGGGCGCCGCTGCGGGCCCCGGGGCCCCTGGCTGCGGCGGTGCCGGCGGACAAGGCCAGGTCCCCGGCGGTGCCGCTGCTGCTGCCGCCCGCGTTGGCGGAGACTGTGGGCCCGGCGCCCCCTGGGGTCCTGCGCTGCGCCCTGGGGGACCGCGGCCGCGTGCGGGGCCGCGCTGCGCCCTACTGCGTGGCCGAGCTCGCCACAGGCCCCAGCGCGCTGTCCCCACTGCCCCCTCAGGCCGACCTTGATGGGCCTCCGGGAGCTGGCAAGCAGGGCATCCCGCAGCCGCTGTCGGGTCCGTGCCGGCGAGGATGGCTCCGGGGCGCCGCCGCCTCCCGCCGCCTGCAGCAGCGACGCGGGTCCCAACCAGAAACCCGCACAGGCGACGACGACCCGCACCGGCTTCTGCAGCAGCTAGTGCTCTCTGGAAACCTCATCAAGGAGGCCGTGCGAAGGCTTCATTCGCGACGGCTGCAGTTACGTGCAAAGCTTCCCCAACGCCCGCTCCTGGGACCTCTGTCGGCCCCGGTGCATGAACCCCCTTCGCCTCGCAGCCCTCGCGCGGCCTGCAGTGACCCTGGCGCCTCCGGGAGGGCGCAGCTCAGAACTGGCGACGGCGTTCTTGTGCCTGGCAGCTAACACGCCCGGGGTGGCCACAGCGCCAGCCTCAGACTGGAGGGCAAGGGGTTCCCTTGAGGGCTGCAGTTCTACTCAGGCTGGTGGAGAACTCTGGCTTTTGGAAGCGAGAGTAAAAAGCTAATGACGAGGAACCGAAAAATCGCGAGTGTTTCGCGGGTAACTGGGGTTGAGGGCCAAAATATTTGGAATGAAGGACTTTGGCCCTATTTAAGGCAGATTTTACAGAGCGCACCTCAAACGTACAAGTCAGTAGGACTCCTTATTTGGCGTGACCCGACCTGGCCGCGGAGCCTGCATTTCCTCGCAGCCTCTCAGTGCCCTCCAGCCCCGCGACCATGTGGCCACAATCCACGCTTCTCCGGATCGCGGTGCGCCGGAACCACGGAGGATGATGCCAGTTACTTGCTTTACCTTTTCAGGGCTGGCTCCTGATCCACTTTGGGGGAGGAGAACATGAGTAGATAATTTCAGGGTGCAGCCCAATCTGCCAGACTTAAAAAAACCATCTTGTGTCTTTGGAGGTGCTGCTTAATACCAAACATGCGGTGCCATGAAGGGACCCTTTGGGGGTTGAATAGGAGTTAACCCCTGCGCTCTCTTTGCAACTGTCTCTCTTCTCAGAGTGGTGGGGGAAGGCTGTACGACACGGGTGGGGAAAGGAGGTGGGGGCGGGGAGTATTGAATGGTGGTGGAAGGGTAGAGAGGCGCGGAGTGAACCCCACGCCCTGTCTAAAGTGTATTTTCAGAGCCGGCCCGCCTCTCCTCGGTTCAAGGTCACTGTTTCCTGGGCACGCACTGGGTTGCGGGACAGAGTAGCCAGGTTCTGCCGGTGCTCGGAGAAGAGCGCAGTGTTTTGCAAGTGCTGGAGTCTCCTGAGGACACGCGCGTCGCCGCCACCGCGGGTGTGGGAAAGCGCGGACGTGCTGGGCGGCTGTGCTTCGGTAGGCGACCACCGCCCCTGGCCGCGCTCCGGGCTTTCACGGAAACTCCCGAGACCGGGCCCTGGGTTCCTCCTCTCCTACTCGGCTCTGCAGTCCTACTCAAGCGGGTGGCTCTGGGATCCTGGGGGCCTGGGTTGGGGGCTAGGGAGACGCCATGTGATGGACACTCCAGGGACACACAGCCTAGCACAGCAGCTTATAATGGGCTCTCCGGGGCCATTTGCAATAACAGCTGCAATTCCCTGGATAGACGAGTTGATTTCCTCCCTCTGCCCCTCCCCCAGCCATGCCAGCTGGCCTTTGTAAGTGCAGGAAACCGAGTAGAAAATGTGACCCTCCAAATGGAGAAGCTGCAGGCTTTGCCATTGTGAACCATGGTGAAGTGCTTGGAACATACTGTTCACTCACTCTAAAGGCGCTGAGACTGTGCTGTTGTTCTCGTTTTTATAGTCAATGGCTTGTTCATCATCCAGATGTGGCTACTGACATATCTACACTTCGCACCGGAGTGTCTGGAATTGTGGCTATCCTGATTATAGGATTTTAACTTAACTGAAATGCCTGCTTTGAATAAATGTGTTGGGTTTTTTGTTTGGTTTTATTTTATACTTGCCATCAGTGAAAAAGATGTACAGAACACATTTCTCTGATCTCCATAAACATGAAAACACTTGAAATCTC"
+  </textarea>
+  </body>
+ </html>
+
+---> Option 5 (geneInfo endpoint)
+TEST 23:
+Input: http://127.0.0.1:8080/geneInfo?gene=FRAT1
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sequence of a human gene</title>
+  </head>
+  <body style="background-color: palevioletred">
+            <h1>Information of a human gene</h1>
+            <p> The gene is on chromosome 10 </p>
+            <p> The start of the gene is: 97319271 </p>
+            <p> The end of the gene is: 97321915</p>
+            <p> The length of the gene is: 2644</p>
+            <p> The identification of the gene is: ENSG00000165879</p>
+            </body>
+</html>
+
+---> Option 6 (geneCalc endpoint)
+TEST 24*
+Input: http://127.0.0.1:8080/geneCalc?gene=FRAT1
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <title>Length and percentage of basis of the gene</title>
+ </head>
+ <body style="background-color: thistle">
+ <h1>Length and percentage of basis of the gene</h1>
+    "The total length of the sequence is: 2645"
+    <p>Base A: Percentage: (18.0%)</p>
+    <p>Base C: Percentage: (30.2%)</p>
+    <p>Base G: Percentage: (32.1%)</p>
+    <p>Base T: Percentage: (19.7%)</p>
+    </body>
+</html>
+
+---> Option 7 (geneList endpoint)
+TEST 25*
+Input: http://127.0.0.1:8080/geneList?chromo=12&start=14&end=456789
+Output:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <title>List of human genes</title>
+ </head>
+ <body style="background-color: moccasin">
+    <h1>List of human genes</h1>
+    <p> · DDX11L8 </p>
+    <p> · WASH8P </p>
+    <p> · FAM138D </p>
+    <p> · IQSEC3 </p>
+    <p> · AC026369.3 </p>
+    <p> · AC026369.1 </p>
+    <p> · AC026369.2 </p>
+    <p> · AC007406.3 </p>
+    <p> · SLC6A12 </p>
+    <p> · AC007406.1 </p>
+    <p> · AC007406.4 </p>
+    <p> · SLC6A13 </p>
+    <p> · AC007406.2 </p>
+    <p> · AC007406.5 </p>
+    <p> · KDM5A </p>
+    <p> · CCDC77 </p>
+    </body>
+  </html>
