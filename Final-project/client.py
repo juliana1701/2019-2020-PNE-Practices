@@ -38,10 +38,10 @@ while options:
 
     if option == 1:
         limit_parameter = input("Select the number of species: ")
-        request = "/listSpecies?limit=" + limit_parameter
-        client(request)
+        req = "/listSpecies?limit=" + limit_parameter
+        client(req)
     elif option == 2:
         parameter = input("choose specie: ")
-        new_parameter = input("Choose a chromosome: ")
-        request = ("/chromosomeLnegth?specie=" + parameter + "&chromo=" + new_parameter)
+        request = "/karyotype?specie=" + parameter
         client(request)
+
